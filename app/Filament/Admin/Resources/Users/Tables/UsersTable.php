@@ -7,6 +7,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 
 class UsersTable
 {
@@ -15,6 +16,16 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable()->searchable(),
+                TextColumn::make('name')
+                    ->label('Nome')
+                    ->formatStateUsing(fn (Model $record): string => $record->full_name . ' (' . $record->name . ')')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('idade')
+                    ->label('Idade')
+                    ->formatStateUsing(fn (Model $record): string => $record->idade . ' anos')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')->label('Data de Inscrição')->dateTime('d/m/Y H:i')->sortable()->searchable(),
             ])
             ->filters([
