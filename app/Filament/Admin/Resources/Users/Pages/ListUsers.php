@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Inscritos\Pages;
+namespace App\Filament\Admin\Resources\Users\Pages;
 
-use App\Filament\Resources\Inscritos\InscritoResource;
+use App\Filament\Admin\Resources\Users\UserResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListInscritos extends ListRecords
+class ListUsers extends ListRecords
 {
-    protected static string $resource = InscritoResource::class;
+    protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
     {

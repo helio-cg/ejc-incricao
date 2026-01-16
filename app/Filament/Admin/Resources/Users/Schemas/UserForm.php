@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\Inscritos\Schemas;
+namespace App\Filament\Admin\Resources\Users\Schemas;
 
-use Dom\Text;
 use Illuminate\Support\Str;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Slider;
 use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Utilities\Get;
-use Filament\Forms\Components\Slider\Enums\PipsMode;
 
-class InscritoForm
+class UserForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -49,7 +46,7 @@ class InscritoForm
                                 ->live() // ou reactive() nas versões mais antigas (< v3.2)
                                 ->afterStateUpdated(function ($state, $set) {
                                     if (!$state) {
-                                        $set('dados_pessoais.idade', null);
+                                        $set('idade', null);
                                         return;
                                     }
 
@@ -59,11 +56,11 @@ class InscritoForm
                                     // Arredonda para baixo automaticamente
                                     $idade = $dataEvento->diffInYears($nascimento, true);
 
-                                    $set('dados_pessoais.idade', (int) $idade);
+                                    $set('idade', (int) $idade);
                                 }),
 
 
-                            TextInput::make('dados_pessoais.idade')
+                            TextInput::make('idade')
                                 ->label('Idade')
                                 ->required()
                                 ->readOnly()
@@ -424,6 +421,3 @@ class InscritoForm
             ]);
     }
 }
-/* Observações:
-- ao salvar, direcionar para um view que mostrar todos os dados cadastrados para conferência
-- colocar botões para editar e gerar pdf para impressão */
