@@ -17,6 +17,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 7px;
+            margin-top: 10px;
         }
 
         legend {
@@ -44,69 +45,209 @@
             border-radius: 4px;
         }
 
-        .header-box {
-            width: 100%;
-            border: 1.5px solid #000;
-            padding: 10px;
-            margin-bottom: 25px;
-        }
 
-        .header-text {
-            font-family: "Roboto", sans-serif;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1.4;
-        }
 
 
     </style>
 </head>
 <body>
-    <div class="header-box">
-        <div class="header-text">
-            ENCONTRO DE JOVENS COM CRISTO<br>
+    <table style="width: 100%;">
+        <tr>
+            <td style="text-align: center; border: 1.5px solid #000; padding: 5px; font-weight: 700;">
+                ENCONTRO DE JOVENS COM CRISTO<br>
             ARTICULAÇÃO DIOCESANA
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
     <p style="text-align: center; font-size: 20px; font-weight: 700;">Paróquia N. Sra. do Perpétuo Socorro - Iguatu - CE</p>
     <p style="text-align: center; font-weight: 600;">_____, de __________________ de 2026 - Ficha de Inscrição Nº _____</p>
-    <p style="text-align: center; margin-bottom: 6px;"><span style="font-weight: bold; text-size: 10px; color: red;">ATENÇÃO: PREENCHIMENTO EXCLUSIVO DO EJC – PASTA FICHAS</span></p>
+    <p style="text-align: center; margin-bottom: 2px;"><span style="font-weight: bold; font-size: 10px; color: red;">ATENÇÃO: PREENCHIMENTO EXCLUSIVO DO EJC – PASTA FICHAS</span></p>
     <p style="text-align: center;">Azul [__] Verde [__] Amarelo [__] Vermelho [__] Rosa [__] Branco [__]</p>
-    <fieldset>
-        <legend>Dados Pessoais</legend>
-        <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-                <!-- Foto à esquerda -->
-                <td style="width: 160px; vertical-align: top; padding-right: 20px;">
-                    <img
-                        src="{{ public_path('images/profile-casal-avatar.jpg') }}"
-                        alt="Foto do inscrito"
-                        style="width: 140px; height: 180px; object-fit: cover; border: 1px solid #333; border-radius: 2px;"
-                    >
-                </td>
 
-                <!-- Nome (e futuros campos) à direita -->
-                <td style="vertical-align: top;">
-                    <div class="form-group" style="max-width: 400px;">
-                        <label style="font-size: 0.85em; font-weight: bold; margin-bottom: 4px; display: block;">
-                            Nome Completo:
-                        </label>
-                        <span class="info" style="font-size: 0.9em; padding: 8px; display: block;">
-                            Nome Completo da Silva (Apelido)
-                        </span>
-                    </div>
+    <!-- Espaçamento -->
+    <div style="margin-top: 10px;"></div>
+<fieldset>
+    <legend>Dados Pessoais</legend>
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 140px;">
+                <img
+                    src="{{ public_path('images/profile-casal-avatar.jpg') }}"
+                    alt="Foto do inscrito"
+                    style="width: 140px; height: 180px; object-fit: cover; border: 1px solid #333; border-radius: 4px;"
+                >
+            </td>
+            <td style="width: 450px;">
+                <table style="width: 100%; ">
+                    <tr>
+                        <td style="width: 70%;">
+                            <div class="form-group">
+                                <label>Nome Completo:</label>
+                                <span class="info">Nome Completo da Silva (Apelido)</span>
+                            </div>
+                        </td>
+                        <td style="width: 30%;">
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <span class="info">(88) 98888-7654</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 
-                    <!-- Pode adicionar mais campos aqui depois, ficando todos alinhados à direita -->
-                    <!-- Exemplo:
-                    <div class="form-group" style="margin-top: 12px;">
-                        <label>Data de Nascimento:</label>
-                        <span class="info">15/03/2000</span>
-                    </div>
-                    -->
-                </td>
-            </tr>
-        </table>
-    </fieldset>
+                <table style="width: 100%; ">
+                    <tr>
+                        <td style="width: 20%;">
+                            <div class="form-group">
+                                <label>Data Nascimento:</label>
+                                <span class="info">01/01/2000</span>
+                            </div>
+                        </td>
+                        <td style="width: 15%;">
+                            <div class="form-group">
+                                <label>Idade:</label>
+                                <span class="info">16 anos</span>
+                            </div>
+                        </td>
+                        <td style="width: 15%;">
+                            <div class="form-group">
+                                <label>Sexo:</label>
+                                <span class="info">Feminino</span>
+                            </div>
+                        </td>
+                        <td style="width: 50%;">
+                            <div class="form-group">
+                                <label>E-Mail:</label>
+                                <span class="info">nomdecompleto@email.com</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; ">
+                    <tr>
+                        <td style="width: 50%;">
+                            <div class="form-group">
+                                <label>Endereço:</label>
+                                <span class="info">Rua Juarez Távora, 82</span>
+                            </div>
+                        </td>
+                        <td style="width: 30%;">
+                            <div class="form-group">
+                                <label>Bairro:</label>
+                                <span class="info">Centro</span>
+                            </div>
+                        </td>
+                        <td style="width: 20%;">
+                            <div class="form-group">
+                                <label>CEP:</label>
+                                <span class="info">63.200-000</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; ">
+                    <tr>
+                        <td style="width: 100%;">
+                            <div class="form-group">
+                                <label>Porto de referência:</label>
+                                <span class="info">Próximo a faculdade na Daraio Rabelo</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<!-- Espaçamento -->
+<div style="margin-top: 10px;"></div>
+
+<fieldset>
+    <legend>Outras Informações</legend>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group" style="margin-top: 4px;">
+                    <label>Possui alguma necessidade especial?</label>
+                    <span class="info">Se sim, descreva se não exibe não possui</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group" style="margin-top: 6px;">
+                    <label>Tem alguma restrição alimentar?</label>
+                    <span class="info">Se sim, descreva se não exibe Sem restrições alimetares</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group" style="margin-top: 6px;">
+                    <label>Faz uso de algum medicamentos?</label>
+                    <span class="info">Se sim, descreva se não exibe não faz uso de medicamentos</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+<!-- Quebra de página -->
+<!--<div style="display: block; page-break-before: always; height: 0px; margin: 0; padding: 0; overflow: hidden;"></div>-->
+
+<!-- Espaçamento -->
+<div style="margin-top: 10px;"></div>
+<fieldset>
+    <legend>Filiação</legend>
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 50%;">
+                <div class="form-group">
+                    <label>Nome do Pai:</label>
+                    <span class="info">José Pereira da Silva</span>
+                </div>
+            </td>
+            <td style="width: 50%;">
+                    <div class="form-group">
+                    <label>Nome da Mãe:</label>
+                    <span class="info">Maria Antonia Pereira da Silva</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Seus pais já fizeram o Encontro de Casais com Cristo?</label>
+                    <span class="info">Se sim e onde, descreva se não exibe Não fizera o ECC</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Seus pais participam de algum movimento religioso?</label>
+                    <span class="info">Se sim e onde, descreva se não exibe Não participam</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</fieldset>
+
+
+
+
 </body>
 </html>
