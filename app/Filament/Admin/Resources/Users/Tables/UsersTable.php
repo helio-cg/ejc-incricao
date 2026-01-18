@@ -2,7 +2,10 @@
 
 namespace App\Filament\Admin\Resources\Users\Tables;
 
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Tables\Table;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,11 +36,29 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('Gerar PDF')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                 //   ->requiresConfirmation()   // ←←← vírgula aqui no final + nada depois
+                    ->action(fn (Model $record) => static::gerarPdf($record->id)),
             ])
             ->toolbarActions([
                // BulkActionGroup::make([
               //      DeleteBulkAction::make(),
                // ]),
             ]);
+    }
+
+    public static function gerarPdf($recordId)
+    {
+        $user = User::where('id', $recordId)->first();
+
+        $pdf = Pdf::loadView('pdf.user_inscricao', ['user' => $user]);
+
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            'inscrilcao_usuario_' . $user->id . '.pdf'
+        );
+
     }
 }
