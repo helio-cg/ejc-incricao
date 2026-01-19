@@ -198,8 +198,7 @@
         </tr>
     </table>
 </fieldset>
-<!-- Quebra de página -->
-<!--<div style="display: block; page-break-before: always; height: 0px; margin: 0; padding: 0; overflow: hidden;"></div>-->
+
 
 <!-- Espaçamento -->
 <div style="margin-top: 10px;"></div>
@@ -246,8 +245,126 @@
 
 </fieldset>
 
+<!-- Quebra de página -->
+<div style="display: block; page-break-before: always; height: 0px; margin: 0; padding: 0; overflow: hidden;"></div>
 
+<fieldset>
+    <legend>Escolaridade</legend>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Estuda?</label>
+                    <span class="info">Se sim e onde, descreva se não exibe Não faz mostra a formação</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
 
+<!-- Espaçamento -->
+<div style="margin-top: 10px;"></div>
+<fieldset>
+    <legend>Dados Profissionais</legend>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Trabalha?</label>
+                    <span class="info">Se sim e onde e horario, descreva se não exibe Não trabalha no momento</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
 
+<!-- Espaçamento -->
+<div style="margin-top: 10px;"></div>
+<fieldset>
+    <legend>Dados Gerais</legend>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Participa de algum grupo/movimento de jovens?</label>
+                    <span class="info">Se sim e onde e horario, descreva se não ...</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Tem irmãos?</label>
+                    <span class="info">Se sim e onde e horario, descreva se não...</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>Tem algum irmão ou parente inscrito no EJC?</label>
+                    <span class="info">Se sim e onde e horario, descreva se não...</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<br>
+<p style="text-align: center; font-size: 20px; font-weight: 700;">Dados do Encontro</p>
+<p>
+    Convidado por: _____________________________________  Telefone: __________________
+</p>
+<p>
+    Eu, ________________________________________, autorizo meu(minha) filho(a) a participar do Encontro de Jovens com Cristo, promovido pela Paróquia N. Sra. do Perpétuo Socorro.
+</p>
+<p style="text-align: right;">
+    Iguatu, _____ de ____________________ de 2026. <br><br>
+</p>
+<table style="width: 100%; margin-top: 40px;">
+    <tr>
+        <td style="width: 50%; text-align: center;">
+            _______________________________________<br>
+            Assinatura do(a) Inscrito(a)<br><br>
+        </td>
+        <td style="width: 50%; text-align: center;">
+            _______________________________________<br>
+            Assinatura do Responsável<br><br>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 50%; text-align: center;">
+            _______________________________________<br>
+            Representante da Pasta Ficha EJC<br>
+        </td>
+        <td style="width: 50%; text-align: center;">
+            _______________________________________<br>
+            Diretor Espiritual<br>
+        </td>
+    </tr>
+</table>
+
+<br>
+<p style="text-align: center; font-size: 20px; font-weight: 700;">Observações</p>
+<p style="border-bottom: 1px solid black; width: 100%; margin: 20px 0 20px 0; padding-bottom: 4px;"></p>
+<p style="border-bottom: 1px solid black; width: 100%; margin: 20px 0 20px 0; padding-bottom: 4px;"></p>
+<p style="border-bottom: 1px solid black; width: 100%; margin: 20px 0 20px 0; padding-bottom: 4px;"></p>
+<p style="border-bottom: 1px solid black; width: 100%; margin: 20px 0 20px 0; padding-bottom: 4px;"></p>
+
+<p style="text-align: center; font-size: 10px;">
+<b>ATENÇÃO!</b><br>
+CRITÉRIOS que devem ser observados ao se visitar os jovens para participar do EJC:<br>
+Idade entre 16 (dezesseis) e 29 (vinte e quatro anos) anos;<br>
+Morar nas localidades da Paróquia;<br>
+A ficha deverá ser devolvida totalmente preenchida, incluindo as assinaturas do participante e de seu responsável legal;<br>
+É obrigatória a presença do jovem participante durante os três dias do Encontro. <br>
+*Esta ficha de inscrição não garante a sua participação no Encontro.
+</p>
 </body>
 </html>
