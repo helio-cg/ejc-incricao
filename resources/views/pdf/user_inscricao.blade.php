@@ -11,6 +11,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            font-size: 0.9em;
         }
 
         fieldset {
@@ -33,7 +34,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 3px;
-            font-size: 0.7em;
+            font-size: 0.75em;
         }
 
         .info {
@@ -41,7 +42,7 @@
             padding: 7px;
             background: #f9f9f9;
             border: 1px solid #ddd;
-            font-size: 0.8em;
+            font-size: 0.9em;
             border-radius: 4px;
         }
 
@@ -60,7 +61,7 @@
         </tr>
     </table>
     <p style="text-align: center; font-size: 20px; font-weight: 700;">Paróquia N. Sra. do Perpétuo Socorro - Iguatu - CE</p>
-    <p style="text-align: center; font-weight: 600;">_____, de __________________ de 2026 - Ficha de Inscrição Nº _____</p>
+    <p style="text-align: center; font-weight: 600;">{{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº 2026-{{ str_pad($user->id, 2, '0', STR_PAD_LEFT) }}</p>
     <p style="text-align: center; margin-bottom: 2px;"><span style="font-weight: bold; font-size: 10px; color: red;">ATENÇÃO: PREENCHIMENTO EXCLUSIVO DO EJC – PASTA FICHAS</span></p>
     <p style="text-align: center;">Azul [__] Verde [__] Amarelo [__] Vermelho [__] Rosa [__] Branco [__]</p>
 
@@ -74,10 +75,10 @@
                 <img
                     src="{{ public_path('images/profile-casal-avatar.jpg') }}"
                     alt="Foto do inscrito"
-                    style="width: 140px; height: 180px; object-fit: cover; border: 1px solid #333; border-radius: 4px;"
+                    style="width: 138px; height: 180px; object-fit: cover; border: 1px solid #333; border-radius: 4px;"
                 >
             </td>
-            <td style="width: 450px;">
+            <td style="width: 460px;">
                 <table style="width: 100%; ">
                     <tr>
                         <td style="width: 70%;">
@@ -146,20 +147,27 @@
                         </td>
                     </tr>
                 </table>
-
                 <table style="width: 100%; ">
                     <tr>
-                        <td style="width: 100%;">
+                        <td style="width: 80%;">
                             <div class="form-group">
                                 <label>Porto de referência:</label>
                                 <span class="info">Próximo a faculdade na Daraio Rabelo</span>
                             </div>
                         </td>
+                        <td style="width: 20%;">
+                            <div class="form-group">
+                                <label>Tem filhos:</label>
+                                <span class="info">Sim</span>
+                            </div>
+                        </td>
                     </tr>
                 </table>
+
             </td>
         </tr>
     </table>
+
 </fieldset>
 
 <!-- Espaçamento -->
@@ -318,7 +326,7 @@
 
 <br>
 <p style="text-align: center; font-size: 20px; font-weight: 700;">Dados do Encontro</p>
-<p>
+<p >
     Convidado por: _____________________________________  Telefone: __________________
 </p>
 <p>
@@ -327,7 +335,7 @@
 <p style="text-align: right;">
     Iguatu, _____ de ____________________ de 2026. <br><br>
 </p>
-<table style="width: 100%; margin-top: 40px;">
+<table style="width: 100%; margin-top: 40px; ">
     <tr>
         <td style="width: 50%; text-align: center;">
             _______________________________________<br>

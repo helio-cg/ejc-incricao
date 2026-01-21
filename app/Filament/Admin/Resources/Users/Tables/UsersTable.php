@@ -53,7 +53,12 @@ class UsersTable
     {
         $user = User::where('id', $recordId)->first();
 
-        $pdf = Pdf::loadView('pdf.user_inscricao', ['user' => $user]);
+        $diaDaInscricao = ucfirst($user->created_at->locale('pt_BR')->translatedFormat('j \d\e F'));
+
+        $pdf = Pdf::loadView('pdf.user_inscricao', [
+            'user' => $user,
+            'diaDaInscricao' => $diaDaInscricao
+        ]);
 
         return response()->streamDownload(
             fn () => print($pdf->output()),
