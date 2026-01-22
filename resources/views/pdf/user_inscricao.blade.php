@@ -15,7 +15,7 @@
         }
 
         fieldset {
-            border: 1px solid #ccc;
+            border: 1px solid #656464;
             border-radius: 5px;
             padding: 7px;
             margin-top: 10px;
@@ -71,26 +71,26 @@
     <legend>Dados Pessoais</legend>
     <table style="width: 100%;">
         <tr>
-            <td style="width: 140px;">
+            <td style="width: 140px; text-align: center; vertical-align: top;">
                 <img
                     src="{{ public_path('images/profile-casal-avatar.jpg') }}"
                     alt="Foto do inscrito"
-                    style="width: 138px; height: 180px; object-fit: cover; border: 1px solid #333; border-radius: 4px;"
+                    style="width: 128px; height: 160px; object-fit: cover; border: 1px solid #ccc; border-radius: 4px;"
                 >
             </td>
-            <td style="width: 460px;">
+            <td style="width: 480px;">
                 <table style="width: 100%; ">
                     <tr>
                         <td style="width: 70%;">
                             <div class="form-group">
                                 <label>Nome Completo:</label>
-                                <span class="info">Nome Completo da Silva (Apelido)</span>
+                                <span class="info">{{ $user->full_name }} ({{ $user->name }})</span>
                             </div>
                         </td>
                         <td style="width: 30%;">
                             <div class="form-group">
                                 <label>Telefone</label>
-                                <span class="info">(88) 98888-7654</span>
+                                <span class="info">{{ $user->dados_pessoais['telefone'] }}</span>
                             </div>
                         </td>
                     </tr>
@@ -101,25 +101,25 @@
                         <td style="width: 20%;">
                             <div class="form-group">
                                 <label>Data Nascimento:</label>
-                                <span class="info">01/01/2000</span>
+                                <span class="info">{{ date('d/m/Y', strtotime($user->dados_pessoais['data_nascimento'])) }}</span>
                             </div>
                         </td>
                         <td style="width: 15%;">
                             <div class="form-group">
                                 <label>Idade:</label>
-                                <span class="info">16 anos</span>
+                                <span class="info">{{ $user->idade }} anos</span>
                             </div>
                         </td>
                         <td style="width: 15%;">
                             <div class="form-group">
                                 <label>Sexo:</label>
-                                <span class="info">Feminino</span>
+                                <span class="info">{{ $user->dados_pessoais['sexo'] }}</span>
                             </div>
                         </td>
                         <td style="width: 50%;">
                             <div class="form-group">
                                 <label>E-Mail:</label>
-                                <span class="info">nomdecompleto@email.com</span>
+                                <span class="info">{{ $user->email }}</span>
                             </div>
                         </td>
                     </tr>
@@ -130,44 +130,46 @@
                         <td style="width: 50%;">
                             <div class="form-group">
                                 <label>Endereço:</label>
-                                <span class="info">Rua Juarez Távora, 82</span>
+                                <span class="info">{{ $user->dados_pessoais['endereco'] }}</span>
                             </div>
                         </td>
-                        <td style="width: 30%;">
+                        <td style="width: 50%;">
                             <div class="form-group">
                                 <label>Bairro:</label>
-                                <span class="info">Centro</span>
+                                <span class="info">{{ $user->dados_pessoais['bairro'] }}</span>
                             </div>
                         </td>
-                        <td style="width: 20%;">
-                            <div class="form-group">
-                                <label>CEP:</label>
-                                <span class="info">63.200-000</span>
-                            </div>
-                        </td>
+
                     </tr>
                 </table>
-                <table style="width: 100%; ">
-                    <tr>
-                        <td style="width: 80%;">
-                            <div class="form-group">
-                                <label>Porto de referência:</label>
-                                <span class="info">Próximo a faculdade na Daraio Rabelo</span>
-                            </div>
-                        </td>
-                        <td style="width: 20%;">
-                            <div class="form-group">
-                                <label>Tem filhos:</label>
-                                <span class="info">Sim</span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+
 
             </td>
         </tr>
     </table>
 
+    <table style="width: 100%; ">
+        <tr>
+            <td style="width: 70%;">
+                <div class="form-group">
+                    <label>Ponto de referência:</label>
+                    <span class="info">{{ $user->dados_pessoais['ponto_referencia'] }}</span>
+                </div>
+            </td>
+            <td style="width: 20%;">
+                <div class="form-group">
+                    <label>CEP:</label>
+                    <span class="info">{{ $user->dados_pessoais['cep'] }}</span>
+                </div>
+            </td>
+            <td style="width: 10%;">
+                <div class="form-group">
+                    <label>Tem filhos:</label>
+                    <span class="info">{{ $user->informacoes_adicionais['tem_filhos']}}</span>
+                </div>
+            </td>
+        </tr>
+    </table>
 </fieldset>
 
 <!-- Espaçamento -->
@@ -180,7 +182,7 @@
             <td>
                 <div class="form-group" style="margin-top: 4px;">
                     <label>Possui alguma necessidade especial?</label>
-                    <span class="info">Se sim, descreva se não exibe não possui</span>
+                    <span class="info">{{ $necessidade_especial }}</span>
                 </div>
             </td>
         </tr>
@@ -190,7 +192,7 @@
             <td>
                 <div class="form-group" style="margin-top: 6px;">
                     <label>Tem alguma restrição alimentar?</label>
-                    <span class="info">Se sim, descreva se não exibe Sem restrições alimetares</span>
+                    <span class="info">{{ $restricao_alimentar }}</span>
                 </div>
             </td>
         </tr>
@@ -200,7 +202,7 @@
             <td>
                 <div class="form-group" style="margin-top: 6px;">
                     <label>Faz uso de algum medicamentos?</label>
-                    <span class="info">Se sim, descreva se não exibe não faz uso de medicamentos</span>
+                    <span class="info">{{ $uso_medicamentos }}</span>
                 </div>
             </td>
         </tr>
@@ -217,13 +219,13 @@
             <td style="width: 50%;">
                 <div class="form-group">
                     <label>Nome do Pai:</label>
-                    <span class="info">José Pereira da Silva</span>
+                    <span class="info">{{ $user->filiacao['pai'] }}</span>
                 </div>
             </td>
             <td style="width: 50%;">
                     <div class="form-group">
                     <label>Nome da Mãe:</label>
-                    <span class="info">Maria Antonia Pereira da Silva</span>
+                    <span class="info">{{ $user->filiacao['mae'] }}</span>
                 </div>
             </td>
         </tr>
@@ -234,7 +236,7 @@
             <td>
                 <div class="form-group">
                     <label>Seus pais já fizeram o Encontro de Casais com Cristo?</label>
-                    <span class="info">Se sim e onde, descreva se não exibe Não fizera o ECC</span>
+                    <span class="info">{{ $fez_ecc }}</span>
                 </div>
             </td>
         </tr>
@@ -245,7 +247,7 @@
             <td>
                 <div class="form-group">
                     <label>Seus pais participam de algum movimento religioso?</label>
-                    <span class="info">Se sim e onde, descreva se não exibe Não participam</span>
+                    <span class="info">{{ $movimento_religioso }}</span>
                 </div>
             </td>
         </tr>
@@ -253,9 +255,8 @@
 
 </fieldset>
 
-<!-- Quebra de página -->
-<div style="display: block; page-break-before: always; height: 0px; margin: 0; padding: 0; overflow: hidden;"></div>
-
+<!-- Espaçamento -->
+<div style="margin-top: 10px;"></div>
 <fieldset>
     <legend>Escolaridade</legend>
     <table style="width: 100%;">
@@ -263,15 +264,17 @@
             <td>
                 <div class="form-group">
                     <label>Estuda?</label>
-                    <span class="info">Se sim e onde, descreva se não exibe Não faz mostra a formação</span>
+                    <span class="info">{{ $estuda }}</span>
                 </div>
             </td>
         </tr>
     </table>
 </fieldset>
 
-<!-- Espaçamento -->
-<div style="margin-top: 10px;"></div>
+<!-- Quebra de página -->
+<div style="display: block; page-break-before: always; height: 0px; margin: 0; padding: 0; overflow: hidden;"></div>
+
+
 <fieldset>
     <legend>Dados Profissionais</legend>
     <table style="width: 100%;">

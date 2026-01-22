@@ -258,27 +258,31 @@ class UserForm
                                 ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
                                 ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
 
-                            Grid::make(4)->schema([
+                            Grid::make(3)->schema([
                                 TextInput::make('dados_escolares.curso')
-                                    ->label('Curso')
+                                    ->label('Curso/Série')
                                     ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
 
-                                TextInput::make('dados_escolares.serie')
-                                    ->label('Série')
-                                    ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
 
-                                TextInput::make('dados_escolares.nivel')
+                                Select::make('dados_escolares.nivel')
                                     ->label('Nível')
+                                    ->options([
+                                        'Fundamental' => 'Fundamental',
+                                        'Médio' => 'Médio',
+                                        'Superior' => 'Superior',
+                                        'Técnico' => 'Técnico',
+                                        'Pós-graduação' => 'Pós-graduação',
+                                    ])
                                     ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
 
                                 Select::make('dados_escolares.turno')
                                     ->label('Turno')
                                     ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
                                     ->options([
-                                        'manha' => 'Manhã',
-                                        'tarde' => 'Tarde',
-                                        'noite' => 'Noite',
-                                        'integral' => 'Integral',
+                                        'Manhã' => 'Manhã',
+                                        'Tarde' => 'Tarde',
+                                        'Noite' => 'Noite',
+                                        'Integral' => 'Integral',
                                     ]),
                             ])->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
                                 ->columnSpanFull(),
@@ -291,12 +295,12 @@ class UserForm
                                 ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
                                 ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
                                 ->options([
-                                    'fundamental_incompleto' => 'Fundamental Incompleto',
-                                    'fundamental_completo' => 'Fundamental Completo',
-                                    'ensino_medio_incompleto' => 'Ensino Médio Incompleto',
-                                    'ensino_medio_completo' => 'Ensino Médio Completo',
-                                    'superior_incompleto' => 'Superior Incompleto',
-                                    'superior_completo' => 'Superior Completo',
+                                    'Fundamental Incompleto' => 'Fundamental Incompleto',
+                                    'Fundamental Completo' => 'Fundamental Completo',
+                                    'Ensino Médio Incompleto' => 'Ensino Médio Incompleto',
+                                    'Ensino Médio Completo' => 'Ensino Médio Completo',
+                                    'Superior Incompleto' => 'Superior Incompleto',
+                                    'Superior Completo' => 'Superior Completo',
                                 ]),
 
                         ])->columnSpanFull(),
