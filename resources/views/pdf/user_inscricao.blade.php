@@ -377,5 +377,8 @@ A ficha deverá ser devolvida totalmente preenchida, incluindo as assinaturas do
 É obrigatória a presença do jovem participante durante os três dias do Encontro. <br>
 *Esta ficha de inscrição não garante a sua participação no Encontro.
 </p>
+
+<br>
+Tios Visitadores: ____________________________________________ Telefone: _______________________
 </body>
 </html>
