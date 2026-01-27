@@ -379,6 +379,6 @@ A ficha deverá ser devolvida totalmente preenchida, incluindo as assinaturas do
 </p>
 
 <br>
-Tios Visitadores: ____________________________________________ Telefone: _______________________
+Tios Visitadores: ______________________________________ Telefone: ____________________
 </body>
 </html>
