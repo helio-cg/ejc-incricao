@@ -2,10 +2,12 @@
 
 namespace App\Filament\Admin\Resources\Users\Pages;
 
-use Illuminate\Support\Facades\Hash;
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Admin\Resources\Users\UserResource;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Layout;
 
+#[Layout('layouts.filament')]
 class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
