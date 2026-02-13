@@ -236,15 +236,15 @@ class UserForm
                                             'sozinho' => 'Sozinho',
                                             'outros' => 'Outros',
                                         ]),
-                                        TextInput::make('filiacao.mora_com_outros')
-                                            ->label('Com quem mora?')
-                                            ->placeholder('Descreva com quem mora')
-                                            ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros')
-                                            ->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
-                                        TextInput::make('filiacao.mora_com_outros_contato')
-                                            ->label('Telefone do contato')
-                                            ->placeholder('(00) 00000-0000')
-                                            ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
+                                    TextInput::make('filiacao.mora_com_outros')
+                                        ->label('Com quem mora?')
+                                        ->placeholder('Descreva com quem mora')
+                                        ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros')
+                                        ->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
+                                    TextInput::make('filiacao.mora_com_outros_contato')
+                                        ->label('Telefone do contato')
+                                        ->placeholder('(00) 00000-0000')
+                                        ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
                                             //->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
                                 ])->columnSpanFull(), // Espaço vazio para separar visualmente os grupos
 
@@ -268,7 +268,7 @@ class UserForm
                             ])->columnSpanFull(),
 
                         Fieldset::make('Informações Adicionais')
-                            ->columns(1)
+                            //->columns(1)
                             ->schema([
                                 ToggleButtons::make('informacoes_adicionais.cristao')
                                     ->label('Você é cristão católico?')
@@ -310,6 +310,7 @@ class UserForm
                                         'sim' => 'Sim',
                                         'nao' => 'Não',
                                     ]),
+                            Grid::make(2)->schema([
                                 ToggleButtons::make('dados_gerais.participa_grupo_jovens')
                                     ->label('Participa de alguma pastoral, movimento ou serviço da igreja?')
                                     ->required()
@@ -326,20 +327,73 @@ class UserForm
                                         'nao' => 'Não',
                                     ]),
 
-                                    TextInput::make('dados_gerais.nome_do_grupo')
-                                        ->label('Nome do Grupo/Movimento')
-                                        ->required(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')
-                                        ->visible(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')->columnSpanFull(),
+                                TextInput::make('dados_gerais.nome_do_grupo')
+                                    ->label('Nome do Grupo/Movimento')
+                                    ->required(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')
+                                    ->visible(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim'),
+                            ])->columnSpanFull(),
 
-                                ToggleButtons::make('dados_gerais.aptidao_musical')
-                                    ->label('Tem alguma aptidão musical ou artistica?')
+
+                            ToggleButtons::make('dados_gerais.aptidao_musical')
+                                ->label('Tem alguma aptidão musical ou artistica?')
+                                ->required()
+                                ->inline()
+                                ->grouped()
+                                ->live()                       // ← IMPORTANTE!
+                                ->afterStateUpdated(function ($state, callable $set) {
+                                    if ($state === 'nao') {
+                                        $set('dados_gerais.aptidao_musical_qual', null);
+                                    }
+                                })
+                                ->options([
+                                    'sim' => 'Sim',
+                                    'nao' => 'Não',
+                                ]),
+
+                            TextInput::make('dados_gerais.aptidao_musical_qual')
+                                ->label('Qual aptidão musical ou artística?')
+                                ->required(fn (Get $get): bool => $get('dados_gerais.aptidao_musical') === 'sim')
+                                ->visible(fn (Get $get): bool => $get('dados_gerais.aptidao_musical') === 'sim'),
+
+                            Grid::make(5)->schema([
+                                ToggleButtons::make('informacoes_adicionais.incrito_antes')
+                                    ->label('Já foi incrito no EJC antes?')
+                                    ->inline()
+                                    ->required()
+                                    ->grouped()
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, callable $set) {
+                                        if ($state === 'nao') {
+                                            $set('dados_gerais.incrito_antes_quando', null);
+                                            $set('dados_gerais.incrito_antes_paroquia', null);
+                                        }
+                                    })
+                                    ->options([
+                                        'sim' => 'Sim',
+                                        'nao' => 'Não',
+                                    ]),
+                                TextInput::make('dados_gerais.incrito_antes_quando')
+                                    ->label('Quando foi incrito?')
+                                    ->required(fn (Get $get): bool => $get('informacoes_adicionais.incrito_antes') === 'sim')
+                                    ->visible(fn (Get $get): bool => $get('informacoes_adicionais.incrito_antes') === 'sim')
+                                    ->columnSpan(2),
+                                TextInput::make('dados_gerais.incrito_antes_paroquia')
+                                    ->label('Qual paróquia foi incrito?')
+                                    ->required(fn (Get $get): bool => $get('informacoes_adicionais.incrito_antes') === 'sim')
+                                    ->visible(fn (Get $get): bool => $get('informacoes_adicionais.incrito_antes') === 'sim')
+                                    ->columnSpan(2),
+                            ])->columnSpanFull(),
+
+                            Grid::make(2)->schema([
+                                ToggleButtons::make('dados_gerais.indicado_por_alguem')
+                                    ->label('Você foi indicado por alguém do EJC?')
                                     ->required()
                                     ->inline()
                                     ->grouped()
                                     ->live()                       // ← IMPORTANTE!
                                     ->afterStateUpdated(function ($state, callable $set) {
                                         if ($state === 'nao') {
-                                            $set('dados_gerais.aptidao_musical_qual', null);
+                                            $set('dados_gerais.indicado_por_alguem_quem', null);
                                         }
                                     })
                                     ->options([
@@ -347,38 +401,39 @@ class UserForm
                                         'nao' => 'Não',
                                     ]),
 
-                                    TextInput::make('dados_gerais.aptidao_musical_qual')
-                                        ->label('Qual aptidão musical ou artística?')
-                                        ->required(fn (Get $get): bool => $get('dados_gerais.aptidao_musical') === 'sim')
-                                        ->visible(fn (Get $get): bool => $get('dados_gerais.aptidao_musical') === 'sim')->columnSpanFull(),
+                                TextInput::make('dados_gerais.indicado_por_alguem_quem')
+                                    ->label('Quem indicou você?')
+                                    ->required(fn (Get $get): bool => $get('dados_gerais.indicado_por_alguem') === 'sim')
+                                    ->visible(fn (Get $get): bool => $get('dados_gerais.indicado_por_alguem') === 'sim'),
+                            ])->columnSpanFull(),
 
-                                TextInput::make('dados_gerais.horaio_para_encontrar')
-                                    ->label('Qual melhor horário pra você ser encontrado em casa?')
+                            Grid::make(2)->schema([
+                                ToggleButtons::make('dados_gerais.inscrito_irmao_amigo_parente')
+                                    ->label('Tem algum irmão, parente ou namorado(a) inscritos nesta edição do EJC?')
                                     ->required()
-                                    ->columnSpanFull(),
+                                    ->inline()
+                                    ->grouped()
+                                    ->live()                       // ← IMPORTANTE!
+                                    ->afterStateUpdated(function ($state, callable $set) {
+                                        if ($state === 'nao') {
+                                            $set('dados_gerais.inscrito_irmao_amigo_parente_quem', null);
+                                        }
+                                    })
+                                    ->options([
+                                        'sim' => 'Sim',
+                                        'nao' => 'Não',
+                                    ]),
 
+                                TextInput::make('dados_gerais.inscrito_irmao_amigo_parente_quem')
+                                    ->label('Nomes dos inscritos?')
+                                    ->required(fn (Get $get): bool => $get('dados_gerais.inscrito_irmao_amigo_parente') === 'sim')
+                                    ->visible(fn (Get $get): bool => $get('dados_gerais.inscrito_irmao_amigo_parente') === 'sim'),
+                            ])->columnSpanFull(),
 
-                                Grid::make(2)->schema([
-                                    Radio::make('informacoes_adicionais.necessidade_especial')
-                                        ->label('Possui alguma necessidade especial?')
-                                        ->inline()
-                                        ->required()
-                                        ->options([
-                                            'sim' => 'Sim',
-                                            'nao' => 'Não',
-                                        ])
-                                        ->live() // ou ->reactive() em versões mais antigas
-                                        // Opcional: limpa o campo quando muda para "Não"
-                                        ->afterStateUpdated(function ($state, callable $set) {
-                                            if ($state === 'nao') {
-                                                $set('informacoes_adicionais.necessidade_especial_descricao', null);
-                                            }
-                                        }),
-                                    Textarea::make('informacoes_adicionais.necessidade_especial_descricao')
-                                    ->label('Descreva a necessidade especial')
-                                    ->visible(fn (callable $get): bool => $get('informacoes_adicionais.necessidade_especial') === 'sim')
-                                    ->required(fn (callable $get): bool => $get('informacoes_adicionais.necessidade_especial') === 'sim'),
-                                ])->columnSpanFull(),
+                            TextInput::make('dados_gerais.horaio_para_encontrar')
+                                ->label('Qual melhor horário pra você ser encontrado em casa?')
+                                ->required()->columnSpanFull(),
+
         /*
                                 Grid::make(2)->schema([
                                     Radio::make('informacoes_adicionais.restricao_alimentar')
@@ -426,7 +481,7 @@ class UserForm
 
         */
 
-                            ])->columnSpanFull(),
+                            ]),
                     ])->columnSpanFull(),
         /*        Fieldset::make('Filiação')
                     ->columns(1)

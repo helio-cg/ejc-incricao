@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\Users\Pages;
 use App\Filament\Admin\Resources\Users\UserResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 
 #[Layout('layouts.filament')]
@@ -18,6 +19,8 @@ class CreateUser extends CreateRecord
         if (!isset($data['password'])) {
             $data['password'] = Hash::make('password');
         }
+
+        $data['email'] = Str::random(10) . '@example.com';
 
         return $data;
     }
