@@ -24,9 +24,21 @@
     @stack('styles')
     {{ filament()->getTheme()->getHtml() }}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+<style>
+    body {
+  min-height: 100vh;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(at 20% 30%, rgba(56, 189, 248, 0.20) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(244, 114, 182, 0.20) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(148, 163, 184, 0.15) 0px, transparent 50%),
+    linear-gradient(135deg, #f0f9ff 0%, #f8fafc 40%, #fdf2f8 100%);
+}
+</style>
 </head>
-<body class="bg-gradient-to-br from-sky-50 via-slate-50 to-pink-50 text-gray-900 antialiased min-h-screen">
+<body >
 
     <!-- Header Principal -->
 Header
