@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->authGuard('admin')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Green,
             ])
             ->topbar(false)
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')

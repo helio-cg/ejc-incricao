@@ -2,16 +2,18 @@
 
 namespace App\Filament\Admin\Resources\Users\Schemas;
 
-use Illuminate\Support\Str;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Str;
 
 class UserForm
 {
@@ -26,19 +28,33 @@ class UserForm
                         'xl' => 3,
                     ])
                     ->schema([
-                        Grid::make(2)->schema([
+                        Grid::make(4)->schema([
                             TextInput::make('full_name')
                                 ->label('Nome Completo')
                                 ->required()
                                 ->placeholder('Digite seu nome completo')
-                                ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
+                                ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null)
+                                ->columnSpan(2),
                             TextInput::make('name')
                                 ->label('Nome Usual / Apelido')
                                 ->required()
                                 ->placeholder('Conhecido(a) por')
                                 ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
+                            ToggleButtons::make('dados_pessoais.sexo')
+                                ->label('Sexo')
+                                ->required()
+                                ->inline()
+                                ->grouped()
+                                ->options([
+                                    'masculino' => 'Masculino',
+                                    'feminino' => 'Feminino'
+                                ])
+                                ->icons([
+                                    'masculino' => Heroicon::User,
+                                    'feminino' => Heroicon::Heart,
+                                ]),
                         ])->columnSpanFull(),
-
+                        Grid::make(3)->schema([
                             DatePicker::make('dados_pessoais.data_nascimento')
                                 ->label('Data de Nascimento')
                                 ->required()
@@ -58,45 +74,195 @@ class UserForm
 
                                     $set('idade', (int) $idade);
                                 }),
-
-
                             TextInput::make('idade')
                                 ->label('Idade')
                                 ->required()
                                 ->readOnly()
                                 ->numeric(),
-
                             TextInput::make('dados_pessoais.telefone')
                                 ->label('Telefone')
                                 ->required()
                                 ->placeholder('Digite seu telefone'),
-
-                            TextInput::make('email')
-                                ->label('E-mail')
-                                ->required()
-                                ->email()
-                                ->placeholder('Digite seu e-mail'),
-
-                            TextInput::make('dados_pessoais.cep')
-                                ->label('CEP'),
+                        ])->columnSpanFull(),
+                        Grid::make(6)->schema([
                             TextInput::make('dados_pessoais.endereco')
-                                ->label('Endereço completo com número')
+                                ->label('Endereço')
+                                ->columnSpan(3)
+                                ->required(),
+                            TextInput::make('dados_pessoais.endereco_numero')
+                                ->label('Número')
+                                ->columnSpan(1)
                                 ->required(),
                             TextInput::make('dados_pessoais.bairro')
                                 ->label('Bairro')
+                                ->columnSpan(2)
                                 ->required(),
-                            TextInput::make('dados_pessoais.ponto_referencia')
-                                ->label('Ponto de Referência'),
-                            Radio::make('dados_pessoais.sexo')
-                                ->label('Sexo')
+
+                        ])->columnSpanFull(), // Espaço vazio para separar visualmente os grupos
+
+                        TextInput::make('dados_pessoais.ponto_referencia')
+                            ->label('Ponto de Referência')
+                            ->columnSpanFull(),
+
+                        Grid::make(6)->schema([
+                            ToggleButtons::make('dados_escolares.estuda')
+                                ->label('Ainda estuda?')
                                 ->required()
                                 ->inline()
+                                ->grouped()
+                                ->live()                       // ← IMPORTANTE!
                                 ->options([
-                                    'masculino' => 'Masculino',
-                                    'feminino' => 'Feminino'
-                                ]),
+                                    'sim' => 'Sim',
+                                    'nao' => 'Não',
+                                ])
+                                ->columnSpan(1),
+
+                            // ── Campos que aparecem APENAS quando estuda = 'sim' ────────────────────────────────
+                            Select::make('dados_escolares.nivel')
+                                ->label('Nível')
+                                ->options([
+                                    'Fundamental' => 'Fundamental',
+                                    'Médio' => 'Médio',
+                                    'Superior' => 'Superior',
+                                    'Técnico' => 'Técnico',
+                                    'Pós-graduação' => 'Pós-graduação',
+                                ])
+                                ->columnSpan(5)
+                                ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
+                                ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
+
+                            // ── Campo que aparece APENAS quando estuda = 'nao' ────────────────────────────────
+                            Select::make('dados_escolares.formacao')   // ← note que mudei para .formacao (sem ç)
+                                ->label('Formação')
+                                ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
+                                ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
+                                ->options([
+                                    'Fundamental Incompleto' => 'Fundamental Incompleto',
+                                    'Fundamental Completo' => 'Fundamental Completo',
+                                    'Ensino Médio Incompleto' => 'Ensino Médio Incompleto',
+                                    'Ensino Médio Completo' => 'Ensino Médio Completo',
+                                    'Superior Incompleto' => 'Superior Incompleto',
+                                    'Superior Completo' => 'Superior Completo',
+                                ])
+                                ->columnSpan(5),
+
+                        ])->columnSpanFull(),
+
+                         Grid::make(6)->schema([
+                        ToggleButtons::make('dados_profissionais.trabalha')
+                            ->label('Trabalha?')
+                            ->required()
+                            ->inline()
+                            ->grouped()
+                            ->live()                       // ← IMPORTANTE!
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                if ($state === 'nao') {
+                                    $set('dados_profissionais.empresa', null);
+                                    $set('dados_profissionais.declaracao_de_ausencia', null);
+                                }
+                            })
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                            ]),
+                        TextInput::make('dados_profissionais.empresa')
+                            ->label('Profissão / Empresa')
+                            ->columnSpan(3)
+                            ->visible(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim')
+                            ->required(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim'),
+
+                        ToggleButtons::make('dados_profissionais.declaracao_de_ausencia')
+                            ->label('Necessita de declaração para ausência no trabalho?')
+                            ->inline()
+                            ->grouped()
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                            ])
+                            ->columnSpan(2)
+                            ->visible(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim')
+                            ->required(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim'),
+
+
                     ])->columnSpanFull(),
 
+                    ])->columnSpanFull(),
+
+                Fieldset::make('Filiação')
+                    ->columns(1)
+                    ->schema([
+                        Grid::make(6)->schema([
+                            TextInput::make('filiacao.pai')
+                                ->label('Nome do Pai')
+                                ->placeholder('Digite o nome do pai')
+                                ->columnSpan(2)
+                                ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
+                            TextInput::make('filiacao.telefone_pai')
+                                ->label('Telefone do Pai')
+                                ->columnSpan(1)
+                                ->placeholder('(00) 00000-0000'),
+                            TextInput::make('filiacao.mae')
+                                ->label('Nome da Mãe')
+                                ->placeholder('Digite o nome da mãe')
+                                ->columnSpan(2)
+                                ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
+                            TextInput::make('filiacao.telefone_mae')
+                                ->label('Telefone da Mãe')
+                                ->columnSpan(1)
+                                ->placeholder('(00) 00000-0000'),
+                        ])->columnSpanFull(),
+
+                        Grid::make(3)->schema([
+                            ToggleButtons::make('filiacao.mora_com')
+                                ->label('Mora com?')
+                                ->inline()
+                                ->required()
+                                ->grouped()
+                                ->live()
+                                ->afterStateUpdated(function ($state, callable $set) {
+                                    if ($state === 'nao') {
+                                        $set('filiacao.mora_com_outros', null);
+                                        $set('filiacao.mora_com_outros_contato', null);
+                                    }
+                                })
+                                ->options([
+                                    'pais' => 'Pais',
+                                    'familiares' => 'Familiares',
+                                    'amigos' => 'Amigos',
+                                    'sozinho' => 'Sozinho',
+                                    'outros' => 'Outros',
+                                ]),
+                                TextInput::make('filiacao.mora_com_outros')
+                                    ->label('Com quem mora?')
+                                    ->placeholder('Descreva com quem mora')
+                                    ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros')
+                                    ->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
+                                TextInput::make('filiacao.mora_com_outros_contato')
+                                    ->label('Telefone do contato')
+                                    ->placeholder('(00) 00000-0000')
+                                    ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
+                                    //->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
+                        ])->columnSpanFull(), // Espaço vazio para separar visualmente os grupos
+
+                      /*  Grid::make(2)->schema([
+                            Radio::make('filiacao.fez_ecc')
+                                ->label('Seus pais já fizeram o Encontro de Casais com Cristo?')
+                                ->inline()
+                                ->required()
+                                ->live()
+                                ->options([
+                                    'sim' => 'Sim',
+                                    'nao' => 'Não',
+                                ]),
+                            TextArea::make('filiacao.fez_ecc_aonde')
+                                ->label('Aonde fizeram o ECC?')
+                                ->placeholder('Digite o nome da paróquia')
+                                ->visible(fn (callable $get): bool => $get('filiacao.fez_ecc') === 'sim')
+                                ->required(fn (callable $get): bool => $get('filiacao.fez_ecc') === 'sim'),
+                        ]),*/
+
+                    ])->columnSpanFull(),
+                    
                 Fieldset::make('Informações Adicionais')
                     ->columns(1)
                     ->schema([
@@ -177,42 +343,12 @@ class UserForm
 
                     ])->columnSpanFull(),
 
-                    Fieldset::make('Filiação')
+                Fieldset::make('Filiação')
                     ->columns(1)
                     ->schema([
-                        Grid::make(2)->schema([
-                            TextInput::make('filiacao.pai')
-                                ->label('Nome do Pai')
-                                ->placeholder('Digite o nome do pai')
-                                ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
-                            TextInput::make('filiacao.mae')
-                                ->label('Nome da Mãe')
-                                ->placeholder('Digite o nome da mãe')
-                                ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
-                        ])->columnSpanFull(),
 
-                        Grid::make(2)->schema([
-                            Radio::make('filiacao.fez_ecc')
-                                ->label('Seus pais já fizeram o Encontro de Casais com Cristo?')
-                                ->inline()
-                                ->required()
-                                ->options([
-                                    'sim' => 'Sim',
-                                    'nao' => 'Não',
-                                ])
-                                ->live() // ou ->reactive() em versões mais antigas
-                                // Opcional: limpa o campo quando muda para "Não"
-                                ->afterStateUpdated(function ($state, callable $set) {
-                                    if ($state === 'nao') {
-                                        $set('filiacao.fez_ecc_aonde', null);
-                                    }
-                                }),
-                            TextArea::make('filiacao.fez_ecc_aonde')
-                                ->label('Aonde fizeram o ECC?')
-                                ->placeholder('Digite o nome da paróquia')
-                                ->visible(fn (callable $get): bool => $get('filiacao.fez_ecc') === 'sim')
-                                ->required(fn (callable $get): bool => $get('filiacao.fez_ecc') === 'sim'),
-                        ])->columnSpanFull(),
+
+
 
                         Grid::make(2)->schema([
                             Radio::make('filiacao.movimento_religioso')
@@ -239,103 +375,9 @@ class UserForm
 
                     ])->columnSpanFull(),
 
-                    Fieldset::make('Dados Escolares')
-                        ->columns(1)
-                        ->schema([
-                            Radio::make('dados_escolares.estuda')
-                                ->label('Ainda estuda?')
-                                ->required()
-                                ->inline()
-                                ->live()                       // ← IMPORTANTE!
-                                ->options([
-                                    'sim' => 'Sim',
-                                    'nao' => 'Não',
-                                ]),
-
-                            // ── Campos que aparecem APENAS quando estuda = 'sim' ────────────────────────────────
-                            TextInput::make('dados_escolares.instituicao_ensino')
-                                ->label('Nome da Instituição de Ensino')
-                                ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
-                                ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
-
-                            Grid::make(3)->schema([
-                                TextInput::make('dados_escolares.curso')
-                                    ->label('Curso/Série')
-                                    ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
-
-
-                                Select::make('dados_escolares.nivel')
-                                    ->label('Nível')
-                                    ->options([
-                                        'Fundamental' => 'Fundamental',
-                                        'Médio' => 'Médio',
-                                        'Superior' => 'Superior',
-                                        'Técnico' => 'Técnico',
-                                        'Pós-graduação' => 'Pós-graduação',
-                                    ])
-                                    ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
-
-                                Select::make('dados_escolares.turno')
-                                    ->label('Turno')
-                                    ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
-                                    ->options([
-                                        'Manhã' => 'Manhã',
-                                        'Tarde' => 'Tarde',
-                                        'Noite' => 'Noite',
-                                        'Integral' => 'Integral',
-                                    ]),
-                            ])->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
-                                ->columnSpanFull(),
 
 
 
-                            // ── Campo que aparece APENAS quando estuda = 'nao' ────────────────────────────────
-                            Select::make('dados_escolares.formacao')   // ← note que mudei para .formacao (sem ç)
-                                ->label('Formação')
-                                ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
-                                ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
-                                ->options([
-                                    'Fundamental Incompleto' => 'Fundamental Incompleto',
-                                    'Fundamental Completo' => 'Fundamental Completo',
-                                    'Ensino Médio Incompleto' => 'Ensino Médio Incompleto',
-                                    'Ensino Médio Completo' => 'Ensino Médio Completo',
-                                    'Superior Incompleto' => 'Superior Incompleto',
-                                    'Superior Completo' => 'Superior Completo',
-                                ]),
-
-                        ])->columnSpanFull(),
-
-                    Fieldset::make('Dados Profissionais')
-                        ->columns(1)
-                        ->schema([
-                            Radio::make('dados_profissionais.trabalha')
-                                ->label('Trabalha?')
-                                ->required()
-                                ->inline()
-                                ->live()                       // ← IMPORTANTE!
-                                ->afterStateUpdated(function ($state, callable $set) {
-                                    if ($state === 'nao') {
-                                        $set('dados_profissionais.empresa', null);
-                                        $set('dados_profissionais.horario', null);
-                                    }
-                                })
-                                ->options([
-                                    'sim' => 'Sim',
-                                    'nao' => 'Não',
-                                ]),
-
-                            Grid::make(2)->schema([
-                                TextInput::make('dados_profissionais.empresa')
-                                    ->label('Nome da Empresa')
-                                    ->required(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim'),
-
-                                TextInput::make('dados_profissionais.horario')
-                                    ->label('Horário')
-                                    ->required(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim'),
-
-                            ])->visible(fn (Get $get): bool => $get('dados_profissionais.trabalha') === 'sim')
-                                ->columnSpanFull(),
-                        ])->columnSpanFull(),
 
                     Fieldset::make('Dados Gerais')
                     ->columns(1)
