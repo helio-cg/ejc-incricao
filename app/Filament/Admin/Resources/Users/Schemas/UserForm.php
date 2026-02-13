@@ -262,10 +262,98 @@ class UserForm
                         ]),*/
 
                     ])->columnSpanFull(),
-                    
+
                 Fieldset::make('Informações Adicionais')
                     ->columns(1)
                     ->schema([
+                        ToggleButtons::make('informacoes_adicionais.cristao')
+                            ->label('Você é cristão católico?')
+                            ->inline()
+                            ->required()
+                            ->grouped()
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                                'outro' => 'Outro',
+                            ]),
+                        ToggleButtons::make('informacoes_adicionais.sacramentos')
+                            ->label('Você já fez os sacramentos da Iniciação Cristã?')
+                            ->inline()
+                            ->required()
+                            ->multiple()
+                            ->grouped()
+                            ->options([
+                                'batismo' => 'Batismo',
+                                'eucaristia' => 'Eucaristia',
+                                'crisma' => 'Crisma',
+                            ]),
+                        ToggleButtons::make('informacoes_adicionais.foi_casado')
+                            ->label('Você já viveu pré-natalmente ou já foi casado?')
+                            ->inline()
+                            ->required()
+                            ->grouped()
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                            ]),
+
+                        ToggleButtons::make('informacoes_adicionais.tem_filhos')
+                            ->label('Tem filhos?')
+                            ->inline()
+                            ->required()
+                            ->grouped()
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                            ]),
+                        ToggleButtons::make('dados_gerais.participa_grupo_jovens')
+                            ->label('Participa de alguma pastoral, movimento ou serviço da igreja?')
+                            ->required()
+                            ->inline()
+                            ->grouped()
+                            ->live()                       // ← IMPORTANTE!
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                if ($state === 'nao') {
+                                    $set('dados_gerais.nome_do_grupo', null);
+                                }
+                            })
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                            ]),
+
+                            TextInput::make('dados_gerais.nome_do_grupo')
+                                ->label('Nome do Grupo/Movimento')
+                                ->required(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')
+                                ->visible(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')->columnSpanFull(),
+
+                        ToggleButtons::make('dados_gerais.aptidao_musical')
+                            ->label('Tem alguma aptidão musical ou artistica?')
+                            ->required()
+                            ->inline()
+                            ->grouped()
+                            ->live()                       // ← IMPORTANTE!
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                if ($state === 'nao') {
+                                    $set('dados_gerais.aptidao_musical_qual', null);
+                                }
+                            })
+                            ->options([
+                                'sim' => 'Sim',
+                                'nao' => 'Não',
+                            ]),
+
+                            TextInput::make('dados_gerais.aptidao_musical_qual')
+                                ->label('Qual aptidão musical ou artística?')
+                                ->required(fn (Get $get): bool => $get('dados_gerais.aptidao_musical') === 'sim')
+                                ->visible(fn (Get $get): bool => $get('dados_gerais.aptidao_musical') === 'sim')->columnSpanFull(),
+
+                        TextInput::make('dados_gerais.horaio_para_encontrar')
+                            ->label('Qual melhor horário pra você ser encontrado em casa?')
+                            ->required()
+                            ->columnSpanFull(),
+
+
                         Grid::make(2)->schema([
                             Radio::make('informacoes_adicionais.necessidade_especial')
                                 ->label('Possui alguma necessidade especial?')
@@ -287,7 +375,7 @@ class UserForm
                             ->visible(fn (callable $get): bool => $get('informacoes_adicionais.necessidade_especial') === 'sim')
                             ->required(fn (callable $get): bool => $get('informacoes_adicionais.necessidade_especial') === 'sim'),
                         ])->columnSpanFull(),
-
+/*
                         Grid::make(2)->schema([
                             Radio::make('informacoes_adicionais.restricao_alimentar')
                                 ->label('Tem alguma restrição alimentar?')
@@ -332,23 +420,13 @@ class UserForm
                                 ->required(fn (callable $get): bool => $get('informacoes_adicionais.uso_medicamentos') === 'sim'),
                         ])->columnSpanFull(),
 
-                        Radio::make('informacoes_adicionais.tem_filhos')
-                            ->label('Tem filhos?')
-                            ->inline()
-                            ->required()
-                            ->options([
-                                'sim' => 'Sim',
-                                'nao' => 'Não',
-                            ]),
+*/
 
                     ])->columnSpanFull(),
 
-                Fieldset::make('Filiação')
+        /*        Fieldset::make('Filiação')
                     ->columns(1)
                     ->schema([
-
-
-
 
                         Grid::make(2)->schema([
                             Radio::make('filiacao.movimento_religioso')
@@ -376,51 +454,13 @@ class UserForm
                     ])->columnSpanFull(),
 
 
+*/
 
-
-
-                    Fieldset::make('Dados Gerais')
+/*
+                Fieldset::make('Dados Gerais')
                     ->columns(1)
                     ->schema([
-                        Radio::make('dados_gerais.participa_grupo_jovens')
-                            ->label('Participa de algum grupo/movimento de jovens?')
-                            ->required()
-                            ->inline()
-                            ->live()                       // ← IMPORTANTE!
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                if ($state === 'nao') {
-                                    $set('dados_gerais.horaroio_participacao', null);
-                                    $set('dados_gerais.nome_do_grupo', null);
-                                    $set('dados_gerais.religiao', null);
-                                }
-                            })
-                            ->options([
-                                'sim' => 'Sim',
-                                'nao' => 'Não',
-                            ]),
-                        Grid::make(3)->schema([
-                            TextInput::make('dados_gerais.nome_do_grupo')
-                                ->label('Nome do Grupo/Movimento')
-                                ->required(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim'),
 
-                            Select::make('dados_gerais.horaroio_participacao')
-                                ->label('Horário?')
-                                ->required(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')
-                                ->options([
-                                    'manhã' => 'Manhã',
-                                    'tarde' => 'Tarde',
-                                    'noite' => 'Noite'
-                                ]),
-                            Select::make('dados_gerais.religiao')
-                                ->label('Religião')
-                                ->required(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')
-                                ->options([
-                                    'católico' => 'Católico',
-                                    'evangélico' => 'Evangélico',
-                                    'outro' => 'Outro'
-
-                                ]),
-                        ])->visible(fn (Get $get): bool => $get('dados_gerais.participa_grupo_jovens') === 'sim')->columnSpanFull(),
 
                         Radio::make('dados_gerais.tem_irmaos')
                             ->label('Tem irmãos?')
@@ -462,7 +502,7 @@ class UserForm
                             ->visible(fn (Get $get): bool => $get('dados_gerais.tem_irmaos_inscritos') === 'sim')
                             ->required(fn (Get $get): bool => $get('dados_gerais.tem_irmaos_inscritos') === 'sim'),
                     ])->columnSpanFull(),
-
+*/
 
             ]);
     }
