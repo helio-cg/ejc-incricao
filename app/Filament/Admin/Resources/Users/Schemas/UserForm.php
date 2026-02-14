@@ -109,7 +109,7 @@ class UserForm
                                     ->columnSpanFull(),
 
                                 Grid::make(6)->schema([
-                                    ToggleButtons::make('dados_escolares.estuda')
+                                    ToggleButtons::make('dados_pessoais.estuda')
                                         ->label('Ainda estuda?')
                                         ->required()
                                         ->inline()
@@ -122,7 +122,7 @@ class UserForm
                                         ->columnSpan(1),
 
                                     // ── Campos que aparecem APENAS quando estuda = 'sim' ────────────────────────────────
-                                    Select::make('dados_escolares.nivel')
+                                    Select::make('dados_pessoais.nivel')
                                         ->label('Nível')
                                         ->options([
                                             'Fundamental' => 'Fundamental',
@@ -132,14 +132,14 @@ class UserForm
                                             'Pós-graduação' => 'Pós-graduação',
                                         ])
                                         ->columnSpan(5)
-                                        ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim')
-                                        ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'sim'),
+                                        ->visible(fn (Get $get): bool => $get('dados_pessoais.estuda') === 'sim')
+                                        ->required(fn (Get $get): bool => $get('dados_pessoais.estuda') === 'sim'),
 
                                     // ── Campo que aparece APENAS quando estuda = 'nao' ────────────────────────────────
-                                    Select::make('dados_escolares.formacao')   // ← note que mudei para .formacao (sem ç)
+                                    Select::make('dados_pessoais.formacao')   // ← note que mudei para .formacao (sem ç)
                                         ->label('Formação')
-                                        ->visible(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
-                                        ->required(fn (Get $get): bool => $get('dados_escolares.estuda') === 'nao')
+                                        ->visible(fn (Get $get): bool => $get('dados_pessoais.estuda') === 'nao')
+                                        ->required(fn (Get $get): bool => $get('dados_pessoais.estuda') === 'nao')
                                         ->options([
                                             'Fundamental Incompleto' => 'Fundamental Incompleto',
                                             'Fundamental Completo' => 'Fundamental Completo',
@@ -216,8 +216,19 @@ class UserForm
                                         ->placeholder('(00) 00000-0000'),
                                 ])->columnSpanFull(),
 
+                                ToggleButtons::make('filiacao.ecc')
+                                    ->label('Seus pais já fizeram o ECC?')
+                                    ->inline()
+                                    ->required()
+                                    ->grouped()
+                                    ->options([
+                                        'sim' => 'Sim',
+                                        'nao' => 'Não',
+                                    ]),
+
+
                                 Grid::make(3)->schema([
-                                    ToggleButtons::make('filiacao.mora_com')
+                                    ToggleButtons::make('dados_pessoais.mora_com')
                                         ->label('Mora com?')
                                         ->inline()
                                         ->required()
@@ -225,8 +236,8 @@ class UserForm
                                         ->live()
                                         ->afterStateUpdated(function ($state, callable $set) {
                                             if ($state === 'nao') {
-                                                $set('filiacao.mora_com_outros', null);
-                                                $set('filiacao.mora_com_outros_contato', null);
+                                                $set('dados_pessoais.mora_com_outros', null);
+                                                $set('dados_pessoais.mora_com_outros_contato', null);
                                             }
                                         })
                                         ->options([
@@ -236,16 +247,16 @@ class UserForm
                                             'sozinho' => 'Sozinho',
                                             'outros' => 'Outros',
                                         ]),
-                                    TextInput::make('filiacao.mora_com_outros')
+                                    TextInput::make('dados_pessoais.mora_com_outros')
                                         ->label('Com quem mora?')
                                         ->placeholder('Descreva com quem mora')
-                                        ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros')
-                                        ->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
-                                    TextInput::make('filiacao.mora_com_outros_contato')
+                                        ->visible(fn (callable $get): bool => $get('dados_pessoais.mora_com') === 'outros')
+                                        ->required(fn (callable $get): bool => $get('dados_pessoais.mora_com') === 'outros'),
+                                    TextInput::make('dados_pessoais.mora_com_outros_contato')
                                         ->label('Telefone do contato')
                                         ->placeholder('(00) 00000-0000')
-                                        ->visible(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
-                                            //->required(fn (callable $get): bool => $get('filiacao.mora_com') === 'outros'),
+                                        ->visible(fn (callable $get): bool => $get('dados_pessoais.mora_com') === 'outros'),
+                                            //->required(fn (callable $get): bool => $get('dados_pessoais.mora_com') === 'outros'),
                                 ])->columnSpanFull(), // Espaço vazio para separar visualmente os grupos
 
                             /*  Grid::make(2)->schema([

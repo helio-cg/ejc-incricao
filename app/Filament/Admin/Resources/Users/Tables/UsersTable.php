@@ -55,51 +55,39 @@ class UsersTable
 
         $diaDaInscricao = ucfirst($user->created_at->locale('pt_BR')->translatedFormat('j \d\e F'));
 
-        if($user->informacoes_adicionais['necessidade_especial'] == 'sim') {
-            $necessidade_especial = 'Sim - ' . $user->informacoes_adicionais['necessidade_especial_descricao'];
+        if($user->dados_pessoais['estuda'] == 'sim') {
+            $estuda = 'Sim - Nível ' . $user->dados_pessoais['nivel'];
         } else {
-            $necessidade_especial = 'Não';
+            $estuda = 'Não estuda - Tem nivel ' . $user->dados_pessoais['nivel'];
         }
 
-        if($user->informacoes_adicionais['restricao_alimentar'] == 'sim') {
-            $restricao_alimentar = 'Sim - ' . $user->informacoes_adicionais['restricao_alimentar_descricao'];
-        }else {
-            $restricao_alimentar = 'Não';
-        }
-
-        if($user->informacoes_adicionais['uso_medicamentos'] == 'sim') {
-            $uso_medicamentos = 'Sim - ' . $user->informacoes_adicionais['uso_medicamentos_descricao'];
-        }else {
-            $uso_medicamentos = 'Não';
-        }
-
-        if($user->filiacao['fez_ecc'] == 'sim') {
-            $fez_ecc = 'Sim - ' . $user->filiacao['fez_ecc_aonde'];
+        if($user->dados_pessoais['mora_com'] == 'outros') {
+            $mora_com =  $user->dados_pessoais['mora_com_outros'] . ' - ' . ($user->dados_pessoais['mora_com_outros_contato'] ?? '');
         } else {
-            $fez_ecc = 'Não';
+            $mora_com =  $user->dados_pessoais['mora_com'];
         }
 
-        if($user->filiacao['movimento_religioso'] == 'sim') {
-            $movimento_religioso = 'Sim - ' . $user->filiacao['movimento_religioso_aonde'];
+        if($user->dados_profissionais['trabalha'] == 'sim') {
+            $trabalha = 'Sim - Trabalha com ' . $user->dados_profissionais['empresa'] ;
+            $oficio = $user->dados_profissionais['declaracao_de_ausencia'] == 'sim' ? 'Precisa de declaração de ausência' : 'Não precisa de declaração de ausência';
         } else {
-            $movimento_religioso = 'Não';
+            $trabalha = 'Não trabalha no momento';
         }
 
-        if($user->dados_escolares['estuda'] == 'sim') {
-            $estuda = 'Sim - ' . $user->dados_escolares['curso']. ' na(o) ' . $user->dados_escolares['instituicao_ensino'] . ' no período da ' . $user->dados_escolares['turno'] .', nivel ' . $user->dados_escolares['nivel'];
+        if(is_array($user->informacoes_adicionais['sacramentos'])) {
+            $sacramentos = implode(', ', $user->informacoes_adicionais['sacramentos']);
         } else {
-            $estuda = 'Não estuda - ' . $user->dados_escolares['formacao'];
+            $sacramentos = $user->informacoes_adicionais['sacramentos'];
         }
 
         $pdf = Pdf::loadView('pdf.user_inscricao', [
             'user' => $user,
             'diaDaInscricao' => $diaDaInscricao,
-            'necessidade_especial' => $necessidade_especial,
-            'restricao_alimentar' => $restricao_alimentar,
-            'uso_medicamentos' => $uso_medicamentos,
-            'fez_ecc' => $fez_ecc,
-            'movimento_religioso' => $movimento_religioso,
             'estuda' => $estuda,
+            'trabalha' => $trabalha,
+            'oficio' => $oficio,
+            'mora_com' => $mora_com,
+            'sacramentos' => $sacramentos,
         ]);
 
         return response()->streamDownload(

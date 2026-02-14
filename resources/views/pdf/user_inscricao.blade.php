@@ -54,14 +54,15 @@
 <body>
     <table style="width: 100%;">
         <tr>
-            <td style="text-align: center; border: 1.5px solid #000; padding: 5px; font-weight: 700;">
+            <td style="text-align: center; border: 1.5px solid #000; padding: 5px; font-weight: 700; font-size: 20px;">
                 ENCONTRO DE JOVENS COM CRISTO<br>
-            ARTICULAÇÃO DIOCESANA
+                ARTICULAÇÃO DIOCESANA<br>
+                DIOCESE DE IGUATU - RNE I
             </td>
         </tr>
     </table>
     <p style="text-align: center; font-size: 20px; font-weight: 700;">Paróquia N. Sra. do Perpétuo Socorro - Iguatu - CE</p>
-    <p style="text-align: center; font-weight: 600;">{{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº 2026-{{ str_pad($user->id, 2, '0', STR_PAD_LEFT) }}</p>
+    <p style="text-align: center; font-weight: 600;">{{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº 2026{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</p>
     <p style="text-align: center; margin-bottom: 2px;"><span style="font-weight: bold; font-size: 10px; color: red;">ATENÇÃO: PREENCHIMENTO EXCLUSIVO DO EJC – PASTA FICHAS</span></p>
     <p style="text-align: center;">Azul [__] Verde [__] Amarelo [__] Vermelho [__] Rosa [__] Branco [__]</p>
 
@@ -118,8 +119,8 @@
                         </td>
                         <td style="width: 50%;">
                             <div class="form-group">
-                                <label>E-Mail:</label>
-                                <span class="info">{{ $user->email }}</span>
+                                <label>Estuda:</label>
+                                <span class="info">{{ $estuda }}</span>
                             </div>
                         </td>
                     </tr>
@@ -127,10 +128,16 @@
 
                 <table style="width: 100%; ">
                     <tr>
-                        <td style="width: 50%;">
+                        <td style="width: 40%;">
                             <div class="form-group">
                                 <label>Endereço:</label>
                                 <span class="info">{{ $user->dados_pessoais['endereco'] }}</span>
+                            </div>
+                        </td>
+                        <td style="width: 10%;">
+                            <div class="form-group">
+                                <label>Número:</label>
+                                <span class="info">{{ $user->dados_pessoais['endereco_numero'] }}</span>
                             </div>
                         </td>
                         <td style="width: 50%;">
@@ -150,16 +157,16 @@
 
     <table style="width: 100%; ">
         <tr>
-            <td style="width: 70%;">
+            <td style="width: 60%;">
                 <div class="form-group">
                     <label>Ponto de referência:</label>
                     <span class="info">{{ $user->dados_pessoais['ponto_referencia'] }}</span>
                 </div>
             </td>
-            <td style="width: 20%;">
+            <td style="width: 30%;">
                 <div class="form-group">
-                    <label>CEP:</label>
-                    <span class="info">{{ $user->dados_pessoais['cep'] }}</span>
+                    <label>Mora com:</label>
+                    <span class="info">{{ $mora_com }}</span>
                 </div>
             </td>
             <td style="width: 10%;">
@@ -179,30 +186,38 @@
     <legend>Outras Informações</legend>
     <table style="width: 100%;">
         <tr>
-            <td>
-                <div class="form-group" style="margin-top: 4px;">
-                    <label>Possui alguma necessidade especial?</label>
-                    <span class="info">{{ $necessidade_especial }}</span>
+            <td style="width: 60%;">
+                <div class="form-group">
+                    <label>Trabalha?</label>
+                    <span class="info">{{ $trabalha }}</span>
+                </div>
+            </td>
+            <td style="width: 40%;">
+                <div class="form-group">
+                    <label>Declaração de Ausência:</label>
+                    <span class="info">{{ $oficio }}</span>
                 </div>
             </td>
         </tr>
     </table>
     <table style="width: 100%;">
         <tr>
-            <td>
-                <div class="form-group" style="margin-top: 6px;">
-                    <label>Tem alguma restrição alimentar?</label>
-                    <span class="info">{{ $restricao_alimentar }}</span>
+            <td style="width: 20%;">
+                <div class="form-group">
+                    <label>Critão católico?</label>
+                    <span class="info">{{ $user->informacoes_adicionais['cristao'] }}</span>
                 </div>
             </td>
-        </tr>
-    </table>
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group" style="margin-top: 6px;">
-                    <label>Faz uso de algum medicamentos?</label>
-                    <span class="info">{{ $uso_medicamentos }}</span>
+            <td style="width: 40%;">
+                <div class="form-group">
+                    <label>Já recebeu algum sacramento?</label>
+                    <span class="info">{{ $sacramentos }}</span>
+                </div>
+            </td>
+            <td style="width: 40%;">
+                <div class="form-group">
+                    <label>Você já viveu pré-natalmente ou já foi casado?</label>
+                    <span class="info">{{ $user->informacoes_adicionais['foi_casado'] }}</span>
                 </div>
             </td>
         </tr>
@@ -219,13 +234,13 @@
             <td style="width: 50%;">
                 <div class="form-group">
                     <label>Nome do Pai:</label>
-                    <span class="info">{{ $user->filiacao['pai'] }}</span>
+                    <span class="info">{{ $user->filiacao['pai'] }} {{ $user->filiacao['telefone_pai']}}</span>
                 </div>
             </td>
             <td style="width: 50%;">
                     <div class="form-group">
                     <label>Nome da Mãe:</label>
-                    <span class="info">{{ $user->filiacao['mae'] }}</span>
+                    <span class="info">{{ $user->filiacao['mae'] }} {{ $user->filiacao['telefone_mae']}}</span>
                 </div>
             </td>
         </tr>
@@ -235,97 +250,24 @@
         <tr>
             <td>
                 <div class="form-group">
-                    <label>Seus pais já fizeram o Encontro de Casais com Cristo?</label>
-                    <span class="info">{{ $fez_ecc }}</span>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label>Seus pais participam de algum movimento religioso?</label>
-                    <span class="info">{{ $movimento_religioso }}</span>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-</fieldset>
-
-<!-- Espaçamento -->
-<div style="margin-top: 10px;"></div>
-<fieldset>
-    <legend>Escolaridade</legend>
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label>Estuda?</label>
-                    <span class="info">{{ $estuda }}</span>
+                    <label>Seus pais já fizeram o ECC?</label>
+                    <span class="info">{{ $user->filiacao['ecc'] }}</span>
                 </div>
             </td>
         </tr>
     </table>
 </fieldset>
+
+
 
 <!-- Quebra de página -->
 <div style="display: block; page-break-before: always; height: 0px; margin: 0; padding: 0; overflow: hidden;"></div>
 
 
-<fieldset>
-    <legend>Dados Profissionais</legend>
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label>Trabalha?</label>
-                    <span class="info">Se sim e onde e horario, descreva se não exibe Não trabalha no momento</span>
-                </div>
-            </td>
-        </tr>
-    </table>
-</fieldset>
+
 
 <!-- Espaçamento -->
-<div style="margin-top: 10px;"></div>
-<fieldset>
-    <legend>Dados Gerais</legend>
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label>Participa de algum grupo/movimento de jovens?</label>
-                    <span class="info">Se sim e onde e horario, descreva se não ...</span>
-                </div>
-            </td>
-        </tr>
-    </table>
 
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label>Tem irmãos?</label>
-                    <span class="info">Se sim e onde e horario, descreva se não...</span>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <table style="width: 100%;">
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label>Tem algum irmão ou parente inscrito no EJC?</label>
-                    <span class="info">Se sim e onde e horario, descreva se não...</span>
-                </div>
-            </td>
-        </tr>
-    </table>
-</fieldset>
 
 <br>
 <p style="text-align: center; font-size: 20px; font-weight: 700;">Dados do Encontro</p>
@@ -378,7 +320,5 @@ A ficha deverá ser devolvida totalmente preenchida, incluindo as assinaturas do
 *Esta ficha de inscrição não garante a sua participação no Encontro.
 </p>
 
-<br>
-Tios Visitadores: ______________________________________ Telefone: ____________________
 </body>
 </html>
