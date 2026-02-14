@@ -58,7 +58,7 @@ class UsersTable
         if($user->dados_pessoais['estuda'] == 'sim') {
             $estuda = 'Sim - Nível ' . $user->dados_pessoais['nivel'];
         } else {
-            $estuda = 'Não estuda - Tem nivel ' . $user->dados_pessoais['nivel'];
+            $estuda = 'Não estuda - ' . $user->dados_pessoais['formacao'];
         }
 
         if($user->dados_pessoais['mora_com'] == 'outros') {

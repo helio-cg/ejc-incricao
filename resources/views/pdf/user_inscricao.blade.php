@@ -62,7 +62,7 @@
         </tr>
     </table>
     <p style="text-align: center; font-size: 20px; font-weight: 700;">Paróquia N. Sra. do Perpétuo Socorro - Iguatu - CE</p>
-    <p style="text-align: center; font-weight: 600;">{{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº 2026{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</p>
+    <p style="text-align: center; font-weight: 600;">IV EJC - {{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº 26{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</p>
     <p style="text-align: center; margin-bottom: 2px;"><span style="font-weight: bold; font-size: 10px; color: red;">ATENÇÃO: PREENCHIMENTO EXCLUSIVO DO EJC – PASTA FICHAS</span></p>
     <p style="text-align: center;">Azul [__] Verde [__] Amarelo [__] Vermelho [__] Rosa [__] Branco [__]</p>
 
