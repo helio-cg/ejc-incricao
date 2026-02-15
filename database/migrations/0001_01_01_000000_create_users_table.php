@@ -14,13 +14,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->nullable();
-            $table->enum('status', array_column(UserStatus::cases(), 'value'))->default('pending');
             $table->json('dados_pessoais')->nullable();
             $table->json('informacoes_adicionais')->nullable();
             $table->json('filiacao')->nullable();
             $table->integer('pdf_gerado')->default(0);
             $table->string('circulo')->nullable();
+            $table->enum('status', array_column(UserStatus::cases(), 'value'))->default('pending');
             $table->rememberToken();
             $table->timestamps();
         });

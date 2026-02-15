@@ -7,8 +7,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -79,15 +77,15 @@ class UsersTable
             $estuda = 'Não estuda - ' . $user->dados_pessoais['formacao'];
         }
 
-        if($user->dados_pessoais['mora_com'] == 'outros') {
-            $mora_com =  $user->dados_pessoais['mora_com_outros'] . ' - ' . ($user->dados_pessoais['mora_com_outros_contato'] ?? '');
+        if($user->informacoes_adicionais['mora_com'] == 'outros') {
+            $mora_com =  $user->informacoes_adicionais['mora_com_outros'] . ' - ' . ($user->informacoes_adicionais['mora_com_outros_contato'] ?? '');
         } else {
-            $mora_com =  $user->dados_pessoais['mora_com'];
+            $mora_com =  $user->informacoes_adicionais['mora_com'];
         }
 
-        if($user->dados_profissionais['trabalha'] == 'sim') {
-            $trabalha = 'Sim - Trabalha com ' . $user->dados_profissionais['empresa'] ;
-            $oficio = $user->dados_profissionais['declaracao_de_ausencia'] == 'sim' ? 'Precisa de declaração de ausência' : 'Não precisa de declaração de ausência';
+        if($user->dados_pessoais['trabalha'] == 'sim') {
+            $trabalha = 'Sim - Trabalha com ' . $user->dados_pessoais['empresa'] ;
+            $oficio = $user->dados_pessoais['declaracao_de_ausencia'] == 'sim' ? 'Precisa de declaração de ausência' : 'Não precisa de declaração de ausência';
         } else {
             $trabalha = 'Não trabalha no momento';
         }

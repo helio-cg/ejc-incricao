@@ -62,7 +62,7 @@
         </tr>
     </table>
     <p style="text-align: center; font-size: 20px; font-weight: 700;">Paróquia N. Sra. do Perpétuo Socorro - Iguatu - CE</p>
-    <p style="text-align: center; font-weight: 600;">IV EJC - {{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº 26{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</p>
+    <p style="text-align: center; font-weight: 600;">IV EJC - {{ $diaDaInscricao }} de 2026 - Ficha de Inscrição Nº {{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</p>
     <p style="text-align: center; margin-bottom: 2px;"><span style="font-weight: bold; font-size: 10px; color: red;">ATENÇÃO: PREENCHIMENTO EXCLUSIVO DO EJC – PASTA FICHAS</span></p>
     <p style="text-align: center;">Azul [__] Verde [__] Amarelo [__] Vermelho [__] Rosa [__] Branco [__]</p>
 
@@ -85,7 +85,7 @@
                         <td style="width: 70%;">
                             <div class="form-group">
                                 <label>Nome Completo:</label>
-                                <span class="info">{{ $user->full_name }} ({{ $user->name }})</span>
+                                <span class="info">{{ $user->dados_pessoais['full_name'] }} ({{ $user->dados_pessoais['conhecido_como'] ?? '' }})</span>
                             </div>
                         </td>
                         <td style="width: 30%;">
@@ -270,12 +270,9 @@
 
 
 <br>
-<p style="text-align: center; font-size: 20px; font-weight: 700;">Dados do Encontro</p>
-<p >
-    Convidado por: _____________________________________  Telefone: __________________
-</p>
+
 <p>
-    Eu, ________________________________________, autorizo meu(minha) filho(a) a participar do Encontro de Jovens com Cristo, promovido pela Paróquia N. Sra. do Perpétuo Socorro.
+    Declaro para os devidos fins que as informações prestadas nesta ficha de inscrição são verdadeiras e que estou ciente das condições de participação no Encontro de Jovens com Cristo (EJC). Comprometo-me a cumprir as normas estabelecidas pela organização do evento e a participar ativamente durante os três dias do encontro, caso minha inscrição seja aceita. Estou ciente de que a participação no EJC é uma oportunidade de crescimento espiritual e pessoal, e estou disposto(a) a vivenciar essa experiência com responsabilidade e respeito.
 </p>
 <p style="text-align: right;">
     Iguatu, _____ de ____________________ de 2026. <br><br>
@@ -302,7 +299,7 @@
         </td>
     </tr>
 </table>
-
+{{--
 <br>
 <p style="text-align: center; font-size: 20px; font-weight: 700;">Observações</p>
 <p style="border-bottom: 1px solid black; width: 100%; margin: 20px 0 20px 0; padding-bottom: 4px;"></p>
@@ -319,6 +316,6 @@ A ficha deverá ser devolvida totalmente preenchida, incluindo as assinaturas do
 É obrigatória a presença do jovem participante durante os três dias do Encontro. <br>
 *Esta ficha de inscrição não garante a sua participação no Encontro.
 </p>
-
+ --}}
 </body>
 </html>

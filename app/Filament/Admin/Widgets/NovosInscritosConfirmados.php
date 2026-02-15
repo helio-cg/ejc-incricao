@@ -51,7 +51,7 @@ class NovosInscritosConfirmados extends TableWidget
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                  //   ->requiresConfirmation()   // ←←← vírgula aqui no final + nada depois
-                    ->action(fn (Model $record) => static::gerarPdf($record->id)),
+               //     ->action(fn (Model $record) => static::gerarPdf($record->id)),
             ])
             ->toolbarActions([
              /*   BulkActionGroup::make([

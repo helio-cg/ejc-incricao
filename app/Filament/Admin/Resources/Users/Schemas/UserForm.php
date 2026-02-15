@@ -3,7 +3,6 @@
 namespace App\Filament\Admin\Resources\Users\Schemas;
 
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
@@ -14,6 +13,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Operation;
 use Filament\Support\Icons\Heroicon;
+use Filament\Support\RawJs;
 use Illuminate\Support\Str;
 
 class UserForm
@@ -35,6 +35,7 @@ class UserForm
                                 ->label('Nome Completo')
                                 ->required()
                                 ->placeholder('Digite seu nome completo')
+                                ->prefixIcon('heroicon-m-identification')
                                 ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null)
                                 ->columnSpan(2),
                             TextInput::make('conhecido_como')
@@ -69,7 +70,7 @@ class UserForm
                                     }
 
                                     $nascimento = \Carbon\Carbon::parse($state);
-                                    $dataEvento = \Carbon\Carbon::create(2026, 5, 16);
+                                    $dataEvento = \Carbon\Carbon::create(2026, 5, 14); // Data do evento
 
                                     // Arredonda para baixo automaticamente
                                     $idade = $dataEvento->diffInYears($nascimento, true);
@@ -78,11 +79,14 @@ class UserForm
                                 }),
                             TextInput::make('idade')
                                 ->label('Idade')
+                                ->integer()
                                 ->required()
                                 ->readOnly()
                                 ->numeric(),
                             TextInput::make('telefone')
                                 ->label('Telefone')
+                                ->mask('(99) 99999-9999')
+                                ->prefixIcon('heroicon-m-phone')
                                 ->required()
                                 ->placeholder('Digite seu telefone'),
                         ])->columnSpanFull(),
@@ -193,25 +197,27 @@ class UserForm
                 Fieldset::make('Filiação')
                     ->statePath('filiacao')
                     ->schema([
-                        Grid::make(6)->schema([
+                        Grid::make(10)->schema([
                             TextInput::make('pai')
                                 ->label('Nome do Pai')
                                 ->placeholder('Digite o nome do pai')
-                                ->columnSpan(2)
+                                ->columnSpan(3)
                                 ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
                             TextInput::make('telefone_pai')
                                 ->label('Telefone do Pai')
-                                ->columnSpan(1)
-                                ->placeholder('(00) 00000-0000'),
+                                ->mask('(99) 99999-9999')
+                                ->prefixIcon('heroicon-m-phone')
+                                ->columnSpan(2),
                             TextInput::make('mae')
                                 ->label('Nome da Mãe')
                                 ->placeholder('Digite o nome da mãe')
-                                ->columnSpan(2)
+                                ->columnSpan(3)
                                 ->dehydrateStateUsing(fn (?string $state) => $state ? Str::ucwords(mb_strtolower($state)) : null),
                             TextInput::make('telefone_mae')
                                 ->label('Telefone da Mãe')
-                                ->columnSpan(1)
-                                ->placeholder('(00) 00000-0000'),
+                                ->mask('(99) 99999-9999')
+                                ->prefixIcon('heroicon-m-phone')
+                                ->columnSpan(2),
                         ])->columnSpanFull(),
 
                         ToggleButtons::make('ecc')
@@ -255,7 +261,8 @@ class UserForm
                                 ->required(fn (callable $get): bool => $get('mora_com') === 'outros'),
                             TextInput::make('mora_com_outros_contato')
                                 ->label('Telefone do contato')
-                                ->placeholder('(00) 00000-0000')
+                                ->mask('(99) 99999-9999')
+                                ->prefixIcon('heroicon-m-phone')
                                 ->visible(fn (callable $get): bool => $get('mora_com') === 'outros'),
                         ])->columnSpanFull(), // Espaço vazio para separar visualmente os grupos
                         ToggleButtons::make('cristao')
