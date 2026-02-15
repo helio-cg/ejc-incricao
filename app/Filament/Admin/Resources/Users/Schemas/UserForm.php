@@ -13,6 +13,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Operation;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
 
@@ -444,6 +445,18 @@ class UserForm
                             TextInput::make('dados_gerais.horaio_para_encontrar')
                                 ->label('Qual melhor horário pra você ser encontrado em casa?')
                                 ->required()->columnSpanFull(),
+
+                                Select::make('circulo')
+                                    ->label('Cor do Círculo')
+                                    ->options([
+                                        'azul' => 'Azul',
+                                        'amarelo' => 'Amarelo',
+                                        'laranja' => 'Laranja',
+                                        'rosa' => 'Rosa',
+                                        'verde' => 'Verde',
+                                        'vermelho' => 'Vermelho',
+                                    ])
+                                    ->visibleOn(Operation::Edit)
 
         /*
                                 Grid::make(2)->schema([

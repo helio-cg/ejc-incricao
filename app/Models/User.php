@@ -4,11 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Filament\Panel;
-use Illuminate\Notifications\Notifiable;
+use App\Enums\UserStatus;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -33,6 +34,8 @@ class User extends Authenticatable implements FilamentUser
         'dados_escolares',
         'dados_profissionais',
         'dados_gerais',
+        'pdf_gerado',
+        'circulo'
     ];
 
     /**
@@ -61,6 +64,7 @@ class User extends Authenticatable implements FilamentUser
             'dados_escolares' => 'array',
             'dados_profissionais' => 'array',
             'dados_gerais' => 'array',
+            'status' => UserStatus::class,
         ];
     }
 

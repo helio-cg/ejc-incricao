@@ -27,6 +27,8 @@ return new class extends Migration
             $table->json('dados_escolares')->nullable();
             $table->json('dados_profissionais')->nullable();
             $table->json('dados_gerais')->nullable();
+            $table->integer('pdf_gerado')->default(0);
+            $table->string('circulo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

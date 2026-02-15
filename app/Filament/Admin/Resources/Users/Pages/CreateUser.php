@@ -23,6 +23,7 @@ class CreateUser extends CreateRecord
 
         $data['email'] = Str::random(12) . '@example.com';
         $data['status'] = UserStatus::ANALYZING->value;
+        $data['pdf_gerado'] = 1;
 
         return $data;
     }

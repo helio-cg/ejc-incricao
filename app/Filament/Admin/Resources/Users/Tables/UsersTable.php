@@ -29,6 +29,10 @@ class UsersTable
                     ->formatStateUsing(fn (Model $record): string => $record->idade . ' anos')
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')->label('Data de Inscrição')->dateTime('d/m/Y H:i')->sortable()->searchable(),
             ])
             ->filters([
@@ -36,6 +40,10 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('Declaração')
+                    ->icon('heroicon-o-eye')
+                    ->color('primary')
+                    ->action(fn (Model $record) => static::dispensaDeTrabalho($record->id)),
                 Action::make('Gerar PDF')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -96,4 +104,20 @@ class UsersTable
         );
 
     }
+
+    public static function dispensaDeTrabalho($recordId)
+    {
+        $user = User::where('id', $recordId)->first();
+
+        $pdf = Pdf::loadView('pdf.dispensa_de_trabalho', [
+            'user' => $user,
+        ]);
+
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            'declaracao_ausencia_usuario_' . $user->id . '.pdf'
+        );
+    }
+
+    
 }

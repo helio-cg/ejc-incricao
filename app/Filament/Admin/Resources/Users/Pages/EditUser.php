@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Users\Pages;
 
+use App\Enums\UserStatus;
 use App\Filament\Admin\Resources\Users\UserResource;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
@@ -22,5 +23,20 @@ class EditUser extends EditRecord
             Action::make('nova_inscricao')
                 ->label('Nova Inscrição'),
         ];
+    }
+
+    protected function afterSave(): void
+    {
+        $user = $this->record;
+
+        // exemplo 1: marcar pdf como não gerado
+        $user->update([
+            'status' => UserStatus::ANALYZING->value,
+        ]);
+
+
+
+        // exemplo 3: chamar job
+        // GerarPdfUser::dispatch($user);
     }
 }

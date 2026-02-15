@@ -20,8 +20,8 @@ class UserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserCircle;
 
-    protected static ?string $modelLabel = 'Encontrista';
-    protected static ?string $pluralModelLabel = 'Encontristas';
+    protected static ?string $modelLabel = 'Inscrição';
+    protected static ?string $pluralModelLabel = 'Inscrições';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -50,4 +50,6 @@ class UserResource extends Resource
             'edit' => EditUser::route('/{record}/edit'),
         ];
     }
+
+
 }

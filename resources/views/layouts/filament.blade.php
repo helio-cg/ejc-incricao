@@ -32,9 +32,9 @@
   background-color: #f8fafc;
   background-image:
     radial-gradient(at 20% 30%, rgba(56, 189, 248, 0.20) 0px, transparent 50%),
-    radial-gradient(at 80% 70%, rgba(244, 114, 182, 0.20) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(162, 244, 114, 0.2) 0px, transparent 50%),
     radial-gradient(at 50% 100%, rgba(148, 163, 184, 0.15) 0px, transparent 50%),
-    linear-gradient(135deg, #f0f9ff 0%, #f8fafc 40%, #fdf2f8 100%);
+    linear-gradient(135deg, #FFFFFF 0%, #F7F9FA 40%, #FCFFF8 100%);
 }
 </style>
 </head>
@@ -55,6 +55,7 @@
         <nav class="hidden md:flex space-x-6 font-medium">
             <a href="{{ route('filament.admin.pages.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
             <a href="{{ route('filament.admin.resources.users.index') }}" class="text-gray-700 hover:text-blue-600">Inscrições</a>
+            <a href="{{ route('filament.admin.resources.users.create') }}" class="text-gray-700 hover:text-blue-600">Cadastrar Novo</a>
         </nav>
 
         <!-- DIREITA - USUÁRIO -->
@@ -76,8 +77,8 @@
     </header>
 
     <main>
-        <section class="max-w-7xl mx-auto px-6 py-12 items-center">
-            <div class="space-y-8 text-center">
+        <section class="max-w-7xl mx-auto px-6 py-12 ">
+            <div class="space-y-8 ">
                 {{ $slot }}
             </div>
         </section>
