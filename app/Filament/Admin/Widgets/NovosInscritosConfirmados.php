@@ -20,16 +20,24 @@ class NovosInscritosConfirmados extends TableWidget
             ->query(fn (): Builder => User::where('pdf_gerado', 0))
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable()->searchable(),
-                TextColumn::make('name')
+                TextColumn::make('dados_pessoais.full_name')
                     ->label('Nome')
-                    ->formatStateUsing(fn (User $record): string => $record->full_name . ' (' . $record->name . ')')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('idade')
+                    ->formatStateUsing(fn ($record) =>
+                        $record->dados_pessoais['full_name'] .
+                        ' (' . ($record->dados_pessoais['conhecido_como'] ?? '') . ')'
+                    )
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(function ($q) use ($search) {
+                            $q->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(dados_pessoais, '$.full_name'))) LIKE ?", ["%" . strtolower($search) . "%"])
+                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(dados_pessoais, '$.conhecido_como'))) LIKE ?", ["%" . strtolower($search) . "%"]);
+                        });
+                    }),
+                TextColumn::make('dados_pessoais.idade')
                     ->label('Idade')
-                    ->formatStateUsing(fn (User $record): string => $record->idade . '  anos')
+                    ->formatStateUsing(fn (Model $record): string => $record->dados_pessoais['idade'] . ' anos')
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('created_at')->label('Data de Inscrição')->dateTime('d/m/Y H:i')->sortable()->searchable(),
             ])
             ->filters([
                 //
@@ -39,15 +47,16 @@ class NovosInscritosConfirmados extends TableWidget
             ])
             ->recordActions([
                 Action::make('Gerar PDF')
+                    ->label('Gerar PDF')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                  //   ->requiresConfirmation()   // ←←← vírgula aqui no final + nada depois
                     ->action(fn (Model $record) => static::gerarPdf($record->id)),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
+             /*   BulkActionGroup::make([
                     //
-                ]),
+                ]),*/
             ]);
     }
 }

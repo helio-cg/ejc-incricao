@@ -16,12 +16,7 @@ class CreateUser extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Garantir que o campo 'password' seja salvo corretamente no banco de dados
-        if (!isset($data['password'])) {
-            $data['password'] = Hash::make('password');
-        }
-
-        $data['email'] = Str::random(12) . '@example.com';
+        
         $data['status'] = UserStatus::ANALYZING->value;
         $data['pdf_gerado'] = 1;
 

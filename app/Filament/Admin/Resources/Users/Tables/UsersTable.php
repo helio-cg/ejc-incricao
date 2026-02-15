@@ -11,6 +11,8 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class UsersTable
 {
@@ -19,20 +21,27 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable()->searchable(),
-                TextColumn::make('name')
+                TextColumn::make('dados_pessoais.full_name')
                     ->label('Nome')
-                    ->formatStateUsing(fn (Model $record): string => $record->full_name . ' (' . $record->name . ')')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('idade')
+                    ->formatStateUsing(fn ($record) =>
+                        $record->dados_pessoais['full_name'] .
+                        ' (' . ($record->dados_pessoais['conhecido_como'] ?? '') . ')'
+                    )
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(function ($q) use ($search) {
+                            $q->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(dados_pessoais, '$.full_name'))) LIKE ?", ["%" . strtolower($search) . "%"])
+                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(dados_pessoais, '$.conhecido_como'))) LIKE ?", ["%" . strtolower($search) . "%"]);
+                        });
+                    }),
+                TextColumn::make('dados_pessoais.idade')
                     ->label('Idade')
-                    ->formatStateUsing(fn (Model $record): string => $record->idade . ' anos')
+                    ->formatStateUsing(fn (Model $record): string => $record->dados_pessoais['idade'] . ' anos')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('status')
+             /*   TextColumn::make('status')
                     ->label('Status')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable(),*/
                 TextColumn::make('created_at')->label('Data de Inscrição')->dateTime('d/m/Y H:i')->sortable()->searchable(),
             ])
             ->filters([
@@ -45,6 +54,7 @@ class UsersTable
                     ->color('primary')
                     ->action(fn (Model $record) => static::dispensaDeTrabalho($record->id)),
                 Action::make('Gerar PDF')
+                    ->label('Gerar PDF')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                  //   ->requiresConfirmation()   // ←←← vírgula aqui no final + nada depois
@@ -119,5 +129,5 @@ class UsersTable
         );
     }
 
-    
+
 }

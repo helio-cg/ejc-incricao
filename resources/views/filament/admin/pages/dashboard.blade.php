@@ -3,6 +3,7 @@
 
 
    @livewire(\App\Filament\Admin\Widgets\NovosInscritosConfirmados::class)
-
+{{--
    @livewire(\App\Filament\Admin\Widgets\Acoes::class)
+    --}}
 </x-filament-panels::page>

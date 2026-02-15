@@ -22,31 +22,16 @@ class User extends Authenticatable implements FilamentUser
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'full_name',
-        'idade',
-        'email',
-        'password',
         'status',
         'dados_pessoais',
         'informacoes_adicionais',
         'filiacao',
-        'dados_escolares',
-        'dados_profissionais',
-        'dados_gerais',
         'pdf_gerado',
         'circulo'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+
 
     /**
      * Get the attributes that should be cast.
@@ -56,14 +41,10 @@ class User extends Authenticatable implements FilamentUser
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
             'dados_pessoais' => 'array',
             'informacoes_adicionais' => 'array',
             'filiacao' => 'array',
             'dados_escolares' => 'array',
-            'dados_profissionais' => 'array',
-            'dados_gerais' => 'array',
             'status' => UserStatus::class,
         ];
     }
