@@ -7,9 +7,8 @@
                     Pré-inscrição para EJC 2026
                 </h2>
                 <p class="text-gray-500 mt-1 text-sm">
-                    Já imaginou 3 dias intensos de louvor, partilha, oração, lágrimas de conversão e abraços que duram pra sempre?
-                    É exatamente isso que te espera no Encontro de Jovens com Cristo 2026.
-                    Não deixe pra depois. Faça sua pré-inscrição agora e venha descobrir o quanto Deus sonha com você!
+                    Não deixe pra depois. Faça sua pré-inscrição agora e venha descobrir o quanto Deus sonha com você!<br>
+                    Você deverá comparecer ao <b>Centro Pastoral</b> com a documentação necessária para confirmar sua inscrição.
                 </p>
             </div>
 

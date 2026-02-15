@@ -28,7 +28,7 @@
 <body class="min-h-screen bg-gradient-to-br from-indigo-900 via-blue-800 to-indigo-700 text-gray-900 antialiased">
 
     <!-- Header Principal -->
-    <main class="mx-auto my-12 max-w-4xl px-4 sm:px-6 lg:px-8 ">
+    <main class="mx-auto my-12 max-w-7xl px-4 sm:px-6 lg:px-8 ">
        {{-- <img src="/images/logo.png" alt="Logo ECC" class="mx-auto  w-48"> --}}
         {{ $slot }}
     </main>

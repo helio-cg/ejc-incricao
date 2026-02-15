@@ -29,12 +29,12 @@
   min-height: 100vh;
   color: #111827;
   -webkit-font-smoothing: antialiased;
-  background-color: #f8fafc;
+  background-color: #C5C5C5;
   background-image:
-    radial-gradient(at 20% 30%, rgba(56, 189, 248, 0.20) 0px, transparent 50%),
-    radial-gradient(at 80% 70%, rgba(162, 244, 114, 0.2) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(148, 163, 184, 0.15) 0px, transparent 50%),
-    linear-gradient(135deg, #FFFFFF 0%, #F7F9FA 40%, #FCFFF8 100%);
+    radial-gradient(at 20% 30%, rgba(253, 213, 253, 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(244, 168, 114, 0.2) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(148, 156, 184, 0.15) 0px, transparent 50%),
+    linear-gradient(135deg, #FFFFFF 0%, #F7F9FA 40%, #FFFFFF 100%);
 }
 </style>
 </head>
