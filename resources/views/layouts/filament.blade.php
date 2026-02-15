@@ -41,7 +41,40 @@
 <body >
 
     <!-- Header Principal -->
-Header
+    <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+
+        <!-- ESQUERDA - LOGO -->
+        <div class="flex items-center">
+            {{--<img src="logo.png" alt="Logo" class="h-10 w-auto">--}}
+            <span class="text-xl font-bold text-gray-600">EJC - 2026</span>
+        </div>
+
+        <!-- CENTRO - LINKS -->
+        <nav class="hidden md:flex space-x-6 font-medium">
+            <a href="{{ route('filament.admin.pages.dashboard') }}" class="text-gray-700 hover:text-blue-600">Home</a>
+            <a href="{{ route('filament.admin.resources.users.index') }}" class="text-gray-700 hover:text-blue-600">Inscrições</a>
+        </nav>
+
+        <!-- DIREITA - USUÁRIO -->
+        <div class="flex items-center space-x-3">
+            @auth
+            <span class="text-gray-700 font-semibold">Olá, {{ auth()->user()->name }}</span>
+            <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
+                @csrf
+                <button type="submit" class="text-gray-700 hover:text-blue-600">Sair</button>
+            </form>
+            @else
+            <a href="{{ route('filament.admin.auth.login') }}" class="text-gray-700 hover:text-blue-600">Entrar</a>
+            @endauth
+            {{--<img src="https://i.pravatar.cc/40" class="h-8 w-8 rounded-full" />--}}
+        </div>
+
+        </div>
+    </div>
+    </header>
+
     <main>
         <section class="max-w-7xl mx-auto px-6 py-12 items-center">
             <div class="space-y-8 text-center">

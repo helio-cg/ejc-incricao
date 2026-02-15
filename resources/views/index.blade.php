@@ -47,6 +47,7 @@
 
             <!-- CTA -->
             <div class="pt-4">
+            {{--
                 <a href="{{ route('inscricao') }}"
                    class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-yellow-500
                           hover:from-yellow-500 hover:to-yellow-600
@@ -56,6 +57,7 @@
                     Quero me inscrever
                     <span class="text-2xl">→</span>
                 </a>
+                 --}}
             </div>
         </div>
 
@@ -68,27 +70,27 @@
 
             <ul class="space-y-4">
                 <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border">
-                    <span class="text-green-600 text-2xl">✔</span>
-                    <span class="text-lg">
+                    <span class="text-green-600 text-xl">✔</span>
+                    <span class="text-md">
                         Ter entre <strong>16 e 29 anos</strong>
                     </span>
                 </li>
                 <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border">
-                    <span class="text-green-600 text-2xl">✔</span>
-                    <span class="text-lg">
+                    <span class="text-green-600 text-xl">✔</span>
+                    <span class="text-md">
                         Fazer parte da <strong>Paróquia do Prado – Iguatu</strong>
                     </span>
                 </li>
                 <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border">
-                    <span class="text-red-500 text-2xl">❌</span>
-                    <span class="text-lg">
+                    <span class="text-red-500 text-xl">❌</span>
+                    <span class="text-md">
                         Não possuir filhos
                     </span>
                 </li>
             </ul>
 
             <p class="text-sm text-center text-gray-500 pt-4">
-                As vagas são limitadas. Garanta sua participação!
+                As vagas são limitadas.<br> Faça sua pré-inscrição agora e aproveite!
             </p>
         </div>
 
@@ -96,10 +98,6 @@
 
 </section>
 
-<!-- RODAPÉ -->
-<footer class="bg-black/40 text-center text-sm text-blue-100 py-4">
-    © 2026 • EJC – Paróquia N. Sra. do Perpétuo Socorro • Prado • Iguatu
-</footer>
 
 </body>
 </html>

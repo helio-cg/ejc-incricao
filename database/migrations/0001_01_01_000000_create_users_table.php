@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('status')->default('pending');
+            $table->enum('status', array_column(UserStatus::cases(), 'value'))->default('pending');
             $table->json('dados_pessoais')->nullable();
             $table->json('informacoes_adicionais')->nullable();
             $table->json('filiacao')->nullable();

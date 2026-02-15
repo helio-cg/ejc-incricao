@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Users\Pages;
 
+use App\Enums\UserStatus;
 use App\Filament\Admin\Resources\Users\UserResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,8 @@ class CreateUser extends CreateRecord
             $data['password'] = Hash::make('password');
         }
 
-        $data['email'] = Str::random(10) . '@example.com';
+        $data['email'] = Str::random(12) . '@example.com';
+        $data['status'] = UserStatus::ANALYZING->value;
 
         return $data;
     }
